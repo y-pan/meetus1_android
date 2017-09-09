@@ -26,7 +26,7 @@
         android:layout_below="@+id/tvTitle"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="31dp"
-        android:text="Click" />
+        android:text="Get" />
 
     <EditText
         android:id="@+id/txtLon"
@@ -43,22 +43,30 @@
         android:id="@+id/txtLat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/txtLon"
-        android:layout_below="@+id/txtLon"
-        android:layout_marginTop="82dp"
+        android:layout_marginTop="28dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Lat" />
+        android:text="Lat"
+        android:layout_below="@+id/txtLon"
+        android:layout_alignStart="@+id/txtLon" />
 
     <TextView
         android:id="@+id/tvResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtLat"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="46dp"
         android:textSize="25dp"
-        android:text="TextView" />
+        android:text="TextView"
+        android:layout_below="@+id/txtLat"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/btnPostUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Post User"
+        android:layout_above="@+id/txtLon"
+        android:layout_toEndOf="@+id/tvTitle" />
 
 </RelativeLayout>
 <!--/android.support.constraint.ConstraintLayout-->

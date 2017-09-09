@@ -10,8 +10,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,7 +29,7 @@ public class FirstActivity extends AppCompatActivity {
     private TextView res;
     private EditText lat, lon;
     private Button sendButton;
-
+    private Button postUserButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,15 +40,23 @@ public class FirstActivity extends AppCompatActivity {
         lon = (EditText)findViewById(R.id.txtLon);
         res = (TextView) findViewById(R.id.tvResult);
         sendButton = (Button)findViewById(R.id.btnSend);
+        postUserButton = (Button)findViewById(R.id.btnPostUser);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("Meetup","Clicked");
 
-
-                Toast.makeText(getApplicationContext(), "Date Sent",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Get data",Toast.LENGTH_SHORT).show();
                 new GetDataTask().execute("https://meetup1.herokuapp.com/api/user");
+            }
+        });
+
+        postUserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Toast.makeText(getApplicationContext(), "Post Data",Toast.LENGTH_SHORT).show();
+                new PostDataTask().execute("https://meetup1.herokuapp.com/api/user");
             }
         });
     }
@@ -59,59 +70,67 @@ public class FirstActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         return false;
     }
+/**********************************************************************************************************/
 
     class GetDataTask extends AsyncTask<String, Void, String>{
         ProgressDialog progressDialog;
         @Override
         protected void onPreExecute(){
-
             super.onPreExecute();
             progressDialog = new ProgressDialog(FirstActivity.this);
             progressDialog.setMessage("Loading data...");
             progressDialog.show();
         }
-
+        /* todo: get json instead of string */
         @Override
         protected String doInBackground(String... strings) {
-            StringBuilder result = new StringBuilder();
             try {
-                // Initialize and config request, then connect to server
-                URL url = new URL(strings[0]);
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setReadTimeout(10000); /*milliseconds*/
-                urlConnection.setConnectTimeout(10000);
-                urlConnection.setRequestMethod("GET");
-                urlConnection.setRequestProperty("Content-Type","application/json");// header
-                urlConnection.connect();
-
-                //Read response from server
-                InputStream inputStream = urlConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-                String line;
-                while((line=bufferedReader.readLine())!=null){
-                    result.append(line).append("\n");
-                }
-
-
-            } catch (MalformedURLException e) {
-                return "Network error!";
+                return Lib.getData(strings[0]);
             } catch (IOException e) {
-                return "Network error!";
+                e.printStackTrace();
             }
-            return result.toString();
+            return null;
         }
         @Override
         protected void onPostExecute(String result){
             super.onPostExecute(result);
-
             // set data response to textView
             res.setText(result);
-
             // cancel progres dialog
             if(progressDialog != null){
                 progressDialog.dismiss();
             }
         }
-
     }
+    class PostDataTask extends AsyncTask<String, Void, String>{
+        ProgressDialog progressDialog;
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+
+            progressDialog = new ProgressDialog(FirstActivity.this);
+            progressDialog.setMessage("Loading data...");
+            progressDialog.show();
+        }
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                return Lib.postUserData(strings[0]);
+            } catch (IOException e) {
+                return "Network Error!";
+            } catch (JSONException e) {
+                return "Data Invalid!";
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result){
+            super.onPostExecute(result);
+            res.setText(result);
+            if(progressDialog != null){
+                progressDialog.dismiss();
+            }
+        }
+    }
+
 }
