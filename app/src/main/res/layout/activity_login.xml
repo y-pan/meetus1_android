@@ -4,7 +4,7 @@
     android:id="@+id/activity_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/pexels_photo_325521"
+    android:background="@drawable/main_background"
     tools:context=".activities.LoginActivity"
     android:layout_gravity="center_vertical">
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/pexels_photo_325521"
+    android:background="@drawable/main_background"
     tools:context="com.example.yun.meetup.activities.RegistrationActivity">
 
     <LinearLayout
