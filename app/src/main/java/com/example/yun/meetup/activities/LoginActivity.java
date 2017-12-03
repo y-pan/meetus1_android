@@ -107,34 +107,42 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
+
             hideViews();
 
-            try {
-                JSONObject responseJSON = new JSONObject(s);
-                if (!responseJSON.isNull("data")){
+            if (s == null){
+                textViewLoginError.setText("Login failed. Please try again");
+            }
+            else{
+                try {
+                    JSONObject responseJSON = new JSONObject(s);
+                    if (!responseJSON.isNull("data")){
 
-                    JSONObject dataJSON = responseJSON.getJSONObject("data");
+                        JSONObject dataJSON = responseJSON.getJSONObject("data");
 
-                    SharedPreferences sharedPref = LoginActivity.this.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putString("id", dataJSON.getString("_id"));
-                    editor.putString("email", dataJSON.getString("email"));
-                    editor.putString("name", dataJSON.getString("name"));
-                    editor.commit();
+                        SharedPreferences sharedPref = LoginActivity.this.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString("id", dataJSON.getString("_id"));
+                        editor.putString("email", dataJSON.getString("email"));
+                        editor.putString("name", dataJSON.getString("name"));
+                        editor.commit();
 
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                    else if (responseJSON.getString("err").equals("Data not found in database")){
+                        textViewLoginError.setText("Wrong email or password. Please try again");
+                    }
+                    else{
+                        textViewLoginError.setText("Login failed. Please try again");
+                    }
                 }
-                else if (responseJSON.getString("err").equals("Data not found in database")){
-                    textViewLoginError.setText("Wrong email or password. Please try again");
-                }
-                else{
+                catch (JSONException e) {
                     textViewLoginError.setText("Login failed. Please try again");
                 }
             }
-            catch (JSONException e) {
-                textViewLoginError.setText("Login failed. Please try again");
-            }
+
+
         }
     }
 }
