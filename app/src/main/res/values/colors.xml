@@ -12,5 +12,6 @@
     <color name="accent_background">#954CAF50</color>
     <color name="errorRed">#FF0000</color>
     <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
 </resources>
 

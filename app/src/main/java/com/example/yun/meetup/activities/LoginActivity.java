@@ -46,7 +46,16 @@ public class LoginActivity extends AppCompatActivity {
         textViewLoginErrorEmail = (TextView) findViewById(R.id.textViewLoginErrorEmail);
         textViewLoginErrorPassword = (TextView) findViewById(R.id.textViewloginErrorPassword);
 
-        hideViews();
+        SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        String name = sharedPreferences.getString("id", null);
+        if (name != null){
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+        else{
+            hideViews();
+        }
+
 
     }
 
