@@ -16,49 +16,48 @@
         android:gravity="center_vertical|center_horizontal">
 
         <TextView
-            android:id="@+id/txt_welcome_user"
+            android:id="@+id/textViewMainTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="32sp"
-            android:text="Welcome, "
+            android:layout_gravity="center_horizontal"
             android:layout_marginBottom="12dp"
-            android:layout_gravity="center_horizontal"/>
+            android:textSize="32sp" />
 
         <Button
-            android:id="@+id/btn_search"
-            android:layout_margin="8dp"
-            android:background="@drawable/background_button"
-            android:textColor="@android:color/white"
+            android:id="@+id/buttonMainSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Search an Event" />
+            android:layout_margin="8dp"
+            android:background="@drawable/background_button"
+            android:text="Search an Event"
+            android:textColor="@android:color/white" />
 
         <Button
-            android:id="@+id/btn_subscribed_events"
-            android:layout_margin="8dp"
-            android:background="@drawable/background_button"
-            android:textColor="@android:color/white"
+            android:id="@+id/buttonMainSubscrivedEvents"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="My subscribed events " />
+            android:layout_margin="8dp"
+            android:background="@drawable/background_button"
+            android:text="My subscribed events "
+            android:textColor="@android:color/white" />
 
         <Button
-            android:id="@+id/btn_create_event"
-            android:layout_margin="8dp"
-            android:background="@drawable/background_button"
-            android:textColor="@android:color/white"
+            android:id="@+id/buttonMainCreateEvent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Create an Event" />
+            android:layout_margin="8dp"
+            android:background="@drawable/background_button"
+            android:text="Create an Event"
+            android:textColor="@android:color/white" />
 
         <Button
-            android:id="@+id/btn_my_hosted_events"
-            android:layout_margin="8dp"
-            android:background="@drawable/background_button"
-            android:textColor="@android:color/white"
+            android:id="@+id/buttonMainHostedEvents"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="My hosted events" />
+            android:layout_margin="8dp"
+            android:background="@drawable/background_button"
+            android:text="My hosted events"
+            android:textColor="@android:color/white" />
 
 
     </LinearLayout>
