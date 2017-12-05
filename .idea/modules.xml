@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://C:/Users/danie/OneDrive/Documents/meetus1_android/Meetup.iml" filepath="C:/Users/danie/OneDrive/Documents/meetus1_android/Meetup.iml" />
+      <module fileurl="file://C:\Users\danie\OneDrive\Documents\meetus1_android\Meetup.iml" filepath="C:\Users\danie\OneDrive\Documents\meetus1_android\Meetup.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:/Users/danie/OneDrive/Documents/meetus1_android/app/app.iml" filepath="C:/Users/danie/OneDrive/Documents/meetus1_android/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/meetus1_android.iml" filepath="$PROJECT_DIR$/meetus1_android.iml" />
     </modules>
   </component>
