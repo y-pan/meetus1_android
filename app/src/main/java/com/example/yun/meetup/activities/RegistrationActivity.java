@@ -124,48 +124,31 @@ public class RegistrationActivity extends AppCompatActivity {
         constraintLayoutRegistrationLoading.setVisibility(View.GONE);
     }
 
-    private class RegistrationTask extends AsyncTask<UserInfo, Void, String>{
+    private class RegistrationTask extends AsyncTask<UserInfo, Void, UserInfo>{
 
         @Override
-        protected String doInBackground(UserInfo... userInfos) {
+        protected UserInfo doInBackground(UserInfo... userInfos) {
             NetworkManager networkManager = new NetworkManager();
             return networkManager.register(userInfos[0]);
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(UserInfo result) {
             hideViews();
 
-            if (s == null){
+            if (result == null){
                 textViewRegistrationError.setText("Registration failed. Please try again");
             }
             else{
-                try {
-                    JSONObject responseJSON = new JSONObject(s);
-                    if (!responseJSON.isNull("data")){
+                SharedPreferences sharedPref = RegistrationActivity.this.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("id", result.getID());
+                editor.putString("email", result.getEmail());
+                editor.putString("name", result.getFullName());
+                editor.commit();
 
-                        JSONObject dataJSON = responseJSON.getJSONObject("data");
-
-                        SharedPreferences sharedPref = RegistrationActivity.this.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPref.edit();
-                        editor.putString("id", dataJSON.getString("_id"));
-                        editor.putString("email", dataJSON.getString("email"));
-                        editor.putString("name", dataJSON.getString("name"));
-                        editor.commit();
-
-                        Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
-                        startActivity(intent);
-                    }
-                    else if (responseJSON.getString("err").equals("Email is already used")){
-                        textViewRegistrationError.setText("Wrong email or password. Please try again");
-                    }
-                    else{
-                        textViewRegistrationError.setText("Registration failed. Please try again");
-                    }
-                }
-                catch (JSONException e) {
-                    textViewRegistrationError.setText("Registration failed. Please try again");
-                }
+                Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
+                startActivity(intent);
             }
 
 

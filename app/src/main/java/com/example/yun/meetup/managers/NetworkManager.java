@@ -10,7 +10,7 @@ public class NetworkManager {
 
     private static ApiProvider apiProvider = new ApiProvider();
 
-    public String login(UserInfo userInfo){
+    public UserInfo login(UserInfo userInfo){
 
         JSONObject json = new JSONObject();
 
@@ -19,16 +19,31 @@ public class NetworkManager {
             json.put("email", userInfo.getEmail());
             json.put("password", userInfo.getPassword());
 
-            return apiProvider.sendRequest("/user/login", "POST", json);
+            String response = apiProvider.sendRequest("/user/login", "POST", json);
 
+            if (response != null) {
+                JSONObject responseJSON = new JSONObject(response);
+                if (!responseJSON.isNull("data")) {
+
+                    JSONObject dataJSON = responseJSON.getJSONObject("data");
+                    UserInfo userInfoResult = new UserInfo();
+                    userInfoResult.setID(dataJSON.getString("_id"));
+                    userInfoResult.setEmail(dataJSON.getString("email"));
+                    userInfoResult.setFullName(dataJSON.getString("name"));
+
+                    return userInfoResult;
+                }
+            }
         }
         catch (JSONException e) {
             e.printStackTrace();
             return null;
         }
+
+        return null;
     }
 
-    public String register(UserInfo userInfo){
+    public UserInfo register(UserInfo userInfo){
 
         JSONObject json = new JSONObject();
 
@@ -38,12 +53,28 @@ public class NetworkManager {
             json.put("name",userInfo.getFirstName() + " " + userInfo.getLastName());
             json.put("password", userInfo.getPassword());
 
-            return apiProvider.sendRequest("/user/register", "POST", json);
+            String response = apiProvider.sendRequest("/user/register", "POST", json);
+
+            JSONObject responseJSON = new JSONObject(response);
+
+            if (!responseJSON.isNull("data")) {
+
+                JSONObject dataJSON = responseJSON.getJSONObject("data");
+                UserInfo userInfoResult = new UserInfo();
+                userInfoResult.setID(dataJSON.getString("_id"));
+                userInfoResult.setEmail(dataJSON.getString("email"));
+                userInfoResult.setFullName(dataJSON.getString("name"));
+
+                return userInfoResult;
+
+            }
         }
         catch (JSONException e) {
             e.printStackTrace();
             return null;
         }
+
+        return null;
     }
 
 
