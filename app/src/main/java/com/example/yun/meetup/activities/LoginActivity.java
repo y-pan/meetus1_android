@@ -96,50 +96,33 @@ public class LoginActivity extends AppCompatActivity {
         constraintLayoutLoginLoading.setVisibility(View.GONE);
     }
 
-    private class LoginTask extends AsyncTask<UserInfo, Void, String>{
+    private class LoginTask extends AsyncTask<UserInfo, Void, UserInfo>{
 
         @Override
-        protected String doInBackground(UserInfo... userInfos) {
+        protected UserInfo doInBackground(UserInfo... userInfos) {
 
             NetworkManager networkManager = new NetworkManager();
             return networkManager.login(userInfos[0]);
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(UserInfo result) {
 
             hideViews();
 
-            if (s == null){
+            if (result == null){
                 textViewLoginError.setText("Login failed. Please try again");
             }
             else{
-                try {
-                    JSONObject responseJSON = new JSONObject(s);
-                    if (!responseJSON.isNull("data")){
+                SharedPreferences sharedPref = LoginActivity.this.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("id", result.getID());
+                editor.putString("email", result.getEmail());
+                editor.putString("name", result.getFullName());
+                editor.commit();
 
-                        JSONObject dataJSON = responseJSON.getJSONObject("data");
-
-                        SharedPreferences sharedPref = LoginActivity.this.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPref.edit();
-                        editor.putString("id", dataJSON.getString("_id"));
-                        editor.putString("email", dataJSON.getString("email"));
-                        editor.putString("name", dataJSON.getString("name"));
-                        editor.commit();
-
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-                    }
-                    else if (responseJSON.getString("err").equals("Data not found in database")){
-                        textViewLoginError.setText("Wrong email or password. Please try again");
-                    }
-                    else{
-                        textViewLoginError.setText("Login failed. Please try again");
-                    }
-                }
-                catch (JSONException e) {
-                    textViewLoginError.setText("Login failed. Please try again");
-                }
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
             }
 
 
