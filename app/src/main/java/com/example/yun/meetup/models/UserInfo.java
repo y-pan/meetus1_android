@@ -6,10 +6,19 @@ package com.example.yun.meetup.models;
 
 public class UserInfo {
 
+    private String ID;
     private String email;
     private String password;
     private String firstName;
     private String lastName;
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
 
     public String getEmail() {
         return email;
