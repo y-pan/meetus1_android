@@ -9,9 +9,11 @@ public class Group {
     private String title;
     private String description;
     private String subtitle;
-    private String hostID;
+//    private String hostID;
+    private UserInfo userInfo;
     private float latitude;
     private float longitude;
+    private String address;
     private String date;
 
     public String getID() {
@@ -46,12 +48,18 @@ public class Group {
         this.subtitle = subtitle;
     }
 
-    public String getHostID() {
-        return hostID;
-    }
+//    public String getHostID() {
+//        return hostID;
+//    }
+//
+//    public void setHostID(String hostID) {
+//        this.hostID = hostID;
+//    }
 
-    public void setHostID(String hostID) {
-        this.hostID = hostID;
+    public UserInfo getUserInfo(){ return userInfo; }
+
+    public void setUserInfo(UserInfo userInfo){
+        this.userInfo = userInfo;
     }
 
     public float getLatitude() {
@@ -76,5 +84,13 @@ public class Group {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MeetUs</string>
+    <string name="title_activity_event_list">EventListActivity</string>
 </resources>
