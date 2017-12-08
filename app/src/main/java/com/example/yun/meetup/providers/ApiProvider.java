@@ -25,7 +25,8 @@ public class ApiProvider {
 
     public String sendRequest(String absoluteURL, String method, JSONObject body){
 
-        String urlPath = getAbsoluteUrl(absoluteURL);
+        // If provided URL is partial, append internal API BASE_URL prefix
+        String urlPath = absoluteURL.startsWith("http") ? absoluteURL : getAbsoluteUrl(absoluteURL);
 
         StringBuilder result = new StringBuilder();
 
@@ -41,10 +42,12 @@ public class ApiProvider {
             urlConnection.connect();
 
             //Write data into server
-            OutputStream outputStream = urlConnection.getOutputStream();
-            bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream));
-            bufferedWriter.write(body.toString());
-            bufferedWriter.flush();
+            if(body != null) {
+                OutputStream outputStream = urlConnection.getOutputStream();
+                bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream));
+                bufferedWriter.write(body.toString());
+                bufferedWriter.flush();
+            }
 
             // read response from server
             InputStream inputStream = urlConnection.getInputStream();

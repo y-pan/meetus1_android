@@ -4,12 +4,12 @@ package com.example.yun.meetup.models;
  * Created by alessio on 05-Dec-17.
  */
 
-public class Group {
+public class Event {
     private String ID;
     private String title;
     private String description;
     private String subtitle;
-//    private String hostID;
+    private String hostID;
     private UserInfo userInfo;
     private float latitude;
     private float longitude;
@@ -48,13 +48,13 @@ public class Group {
         this.subtitle = subtitle;
     }
 
-//    public String getHostID() {
-//        return hostID;
-//    }
-//
-//    public void setHostID(String hostID) {
-//        this.hostID = hostID;
-//    }
+    public String getHostID() {
+        return hostID;
+    }
+
+    public void setHostID(String hostID) {
+        this.hostID = hostID;
+    }
 
     public UserInfo getUserInfo(){ return userInfo; }
 

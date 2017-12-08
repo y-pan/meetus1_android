@@ -1,134 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:layout_gravity="center_vertical"
     android:background="@drawable/main_background"
-    tools:context="com.example.yun.meetup.activities.CreateEventActivity">
+    tools:context=".activities.CreateEventActivity">
 
     <LinearLayout
-        android:orientation="vertical"
-        android:background="@drawable/gradient_background"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.example.yun.meetup.activities.CreateEventActivity">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Create an Event"
-            android:layout_margin="8dp"
-            android:gravity="center"
-            android:textSize="32sp"/>
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient_background"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/edit_event_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:background="@drawable/background_edittext"
-            android:hint="Title"
-            android:layout_margin="8dp"
-            android:padding="8dp"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:gravity="center"
+                android:text="Create an Event"
+                android:textSize="32sp" />
 
-        <TextView
-            android:id="@+id/txt_error_title"
-            android:layout_marginLeft="12dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/errorRed"
-            android:textSize="8sp"/>
+            <EditText
+                android:id="@+id/edit_event_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/background_edittext"
+                android:ems="10"
+                android:hint="Title"
+                android:inputType="textPersonName"
+                android:padding="8dp"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
 
-        <EditText
-            android:id="@+id/edit_event_subtitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:background="@drawable/background_edittext"
-            android:hint="Subtitle"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="16dp"
-            android:padding="8dp"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white"/>
+            <TextView
+                android:id="@+id/txt_error_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:textColor="@color/errorRed"
+                android:textSize="16sp"
+                android:visibility="gone"/>
 
-        <EditText
-            android:hint="Date"
-            android:id="@+id/edt_event_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/background_edittext"
-            android:ems="10"
-            android:inputType="none"
-            android:layout_margin="8dp"
-            android:padding="8dp"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white"
-            android:clickable="true"
-            android:focusable="false"/>
+            <EditText
+                android:id="@+id/edit_event_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/background_edittext"
+                android:ems="10"
+                android:hint="Subtitle"
+                android:inputType="textPersonName"
+                android:padding="8dp"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
 
-        <TextView
-            android:id="@+id/txt_error_date"
-            android:layout_marginLeft="12dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/errorRed"
-            android:textSize="8sp"/>
+            <EditText
+                android:id="@+id/edt_event_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/background_edittext"
+                android:clickable="true"
+                android:ems="10"
+                android:focusable="false"
+                android:hint="Date"
+                android:inputType="none"
+                android:padding="8dp"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
 
-        <EditText
-            android:id="@+id/edt_address"
-            android:hint="Address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/background_edittext"
-            android:ems="10"
-            android:inputType="textPostalAddress"
-            android:padding="8dp"
-            android:layout_margin="8dp"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white"/>
+            <TextView
+                android:id="@+id/txt_error_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:textColor="@color/errorRed"
+                android:textSize="16sp"
+                android:visibility="gone"/>
 
-        <TextView
-            android:id="@+id/txt_error_address"
-            android:layout_marginLeft="12dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/errorRed"
-            android:textSize="8sp"/>
+            <EditText
+                android:id="@+id/edt_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/background_edittext"
+                android:ems="10"
+                android:hint="Address"
+                android:inputType="textPostalAddress"
+                android:padding="8dp"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
 
-        <EditText
-            android:id="@+id/edt_description"
-            android:hint="Description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:lines="4"
-            android:background="@drawable/background_edittext"
-            android:ems="10"
-            android:inputType="textMultiLine"
-            android:layout_margin="8dp"
-            android:padding="12dp"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white"/>
+            <TextView
+                android:id="@+id/txt_error_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:textColor="@color/errorRed"
+                android:textSize="16sp"
+                android:visibility="gone"/>
 
-        <Button
-            android:layout_gravity="center"
-            android:id="@+id/buttonCreateEvent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:padding="8dp"
-            android:background="@drawable/background_button"
-            android:text="Create an Event"
-            android:textColor="@android:color/white" />
+            <EditText
+                android:id="@+id/edt_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/background_edittext"
+                android:ems="10"
+                android:hint="Description"
+                android:inputType="textMultiLine"
+                android:lines="4"
+                android:padding="12dp"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
+
+            <Button
+                android:id="@+id/buttonCreateEvent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="16dp"
+                android:background="@drawable/background_button"
+                android:onClick="handleOnClickCreateEvent"
+                android:padding="8dp"
+                android:text="Create an Event"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
 
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayoutLoading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.5"
+        android:background="@color/black"
+        android:visibility="gone">
 
-</LinearLayout>
+        <ProgressBar
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+</FrameLayout>

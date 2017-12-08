@@ -49,7 +49,8 @@
             android:layout_margin="8dp"
             android:background="@drawable/background_button"
             android:text="Create an Event"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:onClick="handleOnClickCreateEvent"/>
 
         <Button
             android:id="@+id/buttonMainHostedEvents"
@@ -58,7 +59,8 @@
             android:layout_margin="8dp"
             android:background="@drawable/background_button"
             android:text="My hosted events"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:onClick="handleOnClickHostedEvents"/>
 
         <Button
             android:id="@+id/buttonMainLogout"

@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.yun.meetup.R;
-import com.example.yun.meetup.models.Group;
+import com.example.yun.meetup.models.Event;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ import java.util.List;
 
 public class EventListViewAdapter extends BaseAdapter {
 
-    private final List<Group> mEvents;
+    private final List<Event> mEvents;
     private Context mContext;
 
     public class ViewHolder {
@@ -37,7 +37,7 @@ public class EventListViewAdapter extends BaseAdapter {
 
     }
 
-    public EventListViewAdapter(List<Group> events, Context context){
+    public EventListViewAdapter(List<Event> events, Context context){
         mEvents = events;
         mContext = context;
     }
@@ -71,7 +71,7 @@ public class EventListViewAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
 
-        Group event = mEvents.get(position);
+        Event event = mEvents.get(position);
 
         holder.eventTitle.setText(event.getTitle());
         holder.eventHost.setText(event.getUserInfo().getFullName());

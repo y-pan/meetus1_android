@@ -3,7 +3,6 @@ package com.example.yun.meetup.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -11,12 +10,10 @@ import android.widget.ListView;
 
 import com.example.yun.meetup.R;
 import com.example.yun.meetup.adapters.EventListViewAdapter;
-import com.example.yun.meetup.models.Group;
+import com.example.yun.meetup.models.Event;
 import com.example.yun.meetup.models.UserInfo;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class EventListActivity extends AppCompatActivity {
 
@@ -46,12 +43,12 @@ public class EventListActivity extends AppCompatActivity {
 
 //          DUMMY DATA
 
-        Group[] eventList = new Group[]{
-                new Group(),
-                new Group(),
-                new Group(),
-                new Group(),
-                new Group()
+        Event[] eventList = new Event[]{
+                new Event(),
+                new Event(),
+                new Event(),
+                new Event(),
+                new Event()
         };
 
         UserInfo userInfo;
