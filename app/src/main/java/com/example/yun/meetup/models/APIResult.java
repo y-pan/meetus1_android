@@ -5,7 +5,7 @@ package com.example.yun.meetup.models;
  */
 
 public class APIResult {
-    public static final String RESULT_SUCCESS = "SUCESS";
+    public static final String RESULT_SUCCESS = "SUCCESS";
     private boolean resultSuccess = false;
     private String resultMessage = null;
     private Object resultEntity = null;
