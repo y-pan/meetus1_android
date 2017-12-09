@@ -13,7 +13,9 @@ import android.widget.TextView;
 
 import com.example.yun.meetup.R;
 import com.example.yun.meetup.managers.NetworkManager;
+import com.example.yun.meetup.models.APIResult;
 import com.example.yun.meetup.models.UserInfo;
+import com.example.yun.meetup.requests.LoginRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -74,13 +76,13 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         if (!error){
-            UserInfo userInfo = new UserInfo();
-            userInfo.setEmail(editTextLoginEmail.getText().toString());
-            userInfo.setPassword(editTextLoginPassword.getText().toString());
+            LoginRequest loginRequest = new LoginRequest();
+            loginRequest.setEmail(editTextLoginEmail.getText().toString());
+            loginRequest.setPassword(editTextLoginPassword.getText().toString());
 
             constraintLayoutLoginLoading.setVisibility(View.VISIBLE);
 
-            new LoginTask().execute(userInfo);
+            new LoginTask().execute(loginRequest);
         }
     }
 
@@ -96,36 +98,35 @@ public class LoginActivity extends AppCompatActivity {
         constraintLayoutLoginLoading.setVisibility(View.GONE);
     }
 
-    private class LoginTask extends AsyncTask<UserInfo, Void, UserInfo>{
+    private class LoginTask extends AsyncTask<LoginRequest, Void, APIResult>{
 
         @Override
-        protected UserInfo doInBackground(UserInfo... userInfos) {
+        protected APIResult doInBackground(LoginRequest... loginRequests) {
 
             NetworkManager networkManager = new NetworkManager();
-            return networkManager.login(userInfos[0]);
+            return networkManager.login(loginRequests[0]);
         }
 
         @Override
-        protected void onPostExecute(UserInfo result) {
+        protected void onPostExecute(APIResult apiResult) {
 
             hideViews();
 
-            if (result == null){
-                textViewLoginError.setText("Login failed. Please try again");
+            if (!apiResult.isResultSuccess()){
+                textViewLoginError.setText(apiResult.getResultMessage());
             }
             else{
+                UserInfo result = (UserInfo) apiResult.getResultEntity();
                 SharedPreferences sharedPref = LoginActivity.this.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putString("id", result.getID());
+                editor.putString("id", result.get_id());
                 editor.putString("email", result.getEmail());
-                editor.putString("name", result.getFullName());
+                editor.putString("name", result.getName());
                 editor.commit();
 
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
             }
-
-
         }
     }
 }

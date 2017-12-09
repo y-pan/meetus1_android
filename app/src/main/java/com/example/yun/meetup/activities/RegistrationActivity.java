@@ -14,7 +14,9 @@ import android.widget.TextView;
 
 import com.example.yun.meetup.R;
 import com.example.yun.meetup.managers.NetworkManager;
+import com.example.yun.meetup.models.APIResult;
 import com.example.yun.meetup.models.UserInfo;
+import com.example.yun.meetup.requests.RegistrationRequest;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.json.JSONException;
@@ -102,15 +104,14 @@ public class RegistrationActivity extends AppCompatActivity {
         }
 
         if (!error){
-            UserInfo userInfo = new UserInfo();
-            userInfo.setEmail(editTextRegistrationEmail.getText().toString());
-            userInfo.setFirstName(editTextRegistrationFirstName.getText().toString());
-            userInfo.setLastName(editTextRegistrationLastName.getText().toString());
-            userInfo.setPassword(editTextRegistrationPassword.getText().toString());
+            RegistrationRequest registrationRequest = new RegistrationRequest();
+            registrationRequest.setEmail(editTextRegistrationEmail.getText().toString());
+            registrationRequest.setName(editTextRegistrationFirstName.getText().toString() + " " + editTextRegistrationLastName.getText().toString());
+            registrationRequest.setPassword(editTextRegistrationPassword.getText().toString());
 
             constraintLayoutRegistrationLoading.setVisibility(View.VISIBLE);
 
-            new RegistrationTask().execute(userInfo);
+            new RegistrationTask().execute(registrationRequest);
         }
     }
 
@@ -124,27 +125,28 @@ public class RegistrationActivity extends AppCompatActivity {
         constraintLayoutRegistrationLoading.setVisibility(View.GONE);
     }
 
-    private class RegistrationTask extends AsyncTask<UserInfo, Void, UserInfo>{
+    private class RegistrationTask extends AsyncTask<RegistrationRequest, Void, APIResult>{
 
         @Override
-        protected UserInfo doInBackground(UserInfo... userInfos) {
+        protected APIResult doInBackground(RegistrationRequest... registrationRequests) {
             NetworkManager networkManager = new NetworkManager();
-            return networkManager.register(userInfos[0]);
+            return networkManager.register(registrationRequests[0]);
         }
 
         @Override
-        protected void onPostExecute(UserInfo result) {
+        protected void onPostExecute(APIResult apiResult) {
             hideViews();
 
-            if (result == null){
-                textViewRegistrationError.setText("Registration failed. Please try again");
+            if (!apiResult.isResultSuccess()){
+                textViewRegistrationError.setText(apiResult.getResultMessage());
             }
             else{
+                UserInfo result = (UserInfo) apiResult.getResultEntity();
                 SharedPreferences sharedPref = RegistrationActivity.this.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putString("id", result.getID());
+                editor.putString("id", result.get_id());
                 editor.putString("email", result.getEmail());
-                editor.putString("name", result.getFullName());
+                editor.putString("name", result.getName());
                 editor.commit();
 
                 Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
