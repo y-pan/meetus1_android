@@ -20,6 +20,7 @@ import com.example.yun.meetup.managers.NetworkManager;
 import com.example.yun.meetup.models.APIResult;
 import com.example.yun.meetup.models.Event;
 import com.example.yun.meetup.models.UserInfo;
+import com.example.yun.meetup.requests.CreateEventRequest;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -115,19 +116,19 @@ public class CreateEventActivity extends AppCompatActivity {
         }
 
         if (!error) {
-            Event event = new Event();
+            CreateEventRequest createEventRequest = new CreateEventRequest();
 
             SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-            event.setHostID(sharedPreferences.getString("id", null));
-            event.setTitle(edtTitle.getText().toString());
-            event.setSubtitle(edtSubTitle.getText().toString());
-            event.setDate(edtDate.getText().toString());
-            event.setAddress(edtAddress.getText().toString());
-            event.setDescription(edtDescription.getText().toString());
+            createEventRequest.setHost_id(sharedPreferences.getString("id", null));
+            createEventRequest.setTitle(edtTitle.getText().toString());
+            createEventRequest.setSubtitle(edtSubTitle.getText().toString());
+            createEventRequest.setDate(edtDate.getText().toString());
+            createEventRequest.setAddress(edtAddress.getText().toString());
+            createEventRequest.setDescription(edtDescription.getText().toString());
 
             constraintLayoutLoading.setVisibility(View.VISIBLE);
 
-            new ValidateAddressTask().execute(event);
+            new ValidateAddressTask().execute(createEventRequest);
         }
 
     }
@@ -139,20 +140,21 @@ public class CreateEventActivity extends AppCompatActivity {
         constraintLayoutLoading.setVisibility(View.GONE);
     }
 
-    private class ValidateAddressTask extends AsyncTask<Event, Void, APIResult> {
+    private class ValidateAddressTask extends AsyncTask<CreateEventRequest, Void, APIResult> {
 
         @Override
-        protected APIResult doInBackground(Event... events) {
+        protected APIResult doInBackground(CreateEventRequest... createEventRequests) {
 
             NetworkManager networkManager = new NetworkManager();
-            return networkManager.validateEventAddress(events[0]);
+            return networkManager.validateEventAddress(createEventRequests[0]);
         }
 
         @Override
         protected void onPostExecute(APIResult result) {
             if (result.isResultSuccess()) {
-                new CreateEventTask().execute((Event)result.getResultEntity());
-            } else {
+                new CreateEventTask().execute((CreateEventRequest)result.getResultEntity());
+            }
+            else {
                 hideViews();
                 txtErrorAddress.setText(result != null ? result.getResultMessage() : "Please contact admin staff!");
                 txtErrorAddress.setVisibility(View.VISIBLE);
@@ -160,13 +162,13 @@ public class CreateEventActivity extends AppCompatActivity {
         }
     }
 
-    private class CreateEventTask extends AsyncTask<Event, Void, APIResult> {
+    private class CreateEventTask extends AsyncTask<CreateEventRequest, Void, APIResult> {
 
         @Override
-        protected APIResult doInBackground(Event... events) {
+        protected APIResult doInBackground(CreateEventRequest... createEventRequests) {
 
             NetworkManager networkManager = new NetworkManager();
-            return networkManager.createEvent(events[0]);
+            return networkManager.createEvent(createEventRequests[0]);
         }
 
         @Override
