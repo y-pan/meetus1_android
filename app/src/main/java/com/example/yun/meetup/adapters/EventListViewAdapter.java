@@ -74,7 +74,7 @@ public class EventListViewAdapter extends BaseAdapter {
         Event event = mEvents.get(position);
 
         holder.eventTitle.setText(event.getTitle());
-        holder.eventHost.setText(event.getUserInfo().getFullName());
+        holder.eventHost.setText(event.getUserInfo().getName());
         holder.eventDate.setText(event.getDate());
         holder.eventAddress.setText(event.getAddress());
 

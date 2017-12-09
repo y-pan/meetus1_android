@@ -53,7 +53,7 @@ public class EventListActivity extends AppCompatActivity {
 
         UserInfo userInfo;
         userInfo = new UserInfo();
-        userInfo.setFullName("Nice Professor");
+        userInfo.setName("Nice Professor");
 
         eventList[0].setID("111");
         eventList[0].setTitle("Nice Project Class");

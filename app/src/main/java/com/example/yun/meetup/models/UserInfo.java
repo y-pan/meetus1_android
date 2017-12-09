@@ -6,19 +6,17 @@ package com.example.yun.meetup.models;
 
 public class UserInfo {
 
-    private String ID;
+    private String _id;
     private String email;
     private String password;
-    private String firstName;
-    private String lastName;
-    private String fullName;
+    private String name;
 
-    public String getID() {
-        return ID;
+    public String get_id() {
+        return _id;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getEmail() {
@@ -37,27 +35,11 @@ public class UserInfo {
         this.password = password;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setName(String name) {
+        this.name = name;
     }
 }
