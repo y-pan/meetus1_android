@@ -2,127 +2,120 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center_vertical"
     android:background="@drawable/main_background"
     tools:context=".activities.CreateEventActivity">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context="com.example.yun.meetup.activities.CreateEventActivity">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/gradient_background"
+            android:layout_marginTop="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/textViewCreateEventTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
                 android:gravity="center"
                 android:text="Create an Event"
-                android:textSize="32sp" />
+                android:textColor="@color/white"
+                android:textSize="32sp"
+                android:layout_gravity="center"/>
 
             <EditText
-                android:id="@+id/edit_event_title"
+                android:id="@+id/editTextCreateEventTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
                 android:background="@drawable/background_edittext"
-                android:ems="10"
                 android:hint="Title"
-                android:inputType="textPersonName"
+                android:layout_marginTop="32dp"
                 android:padding="8dp"
+                android:inputType="textPersonName"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white" />
 
             <TextView
-                android:id="@+id/txt_error_title"
-                android:layout_width="wrap_content"
+                android:id="@+id/textViewErrorCreateEventTitle"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
+                android:layout_gravity="left"
                 android:textColor="@color/errorRed"
                 android:textSize="16sp"
                 android:visibility="gone"/>
 
             <EditText
-                android:id="@+id/edit_event_subtitle"
+                android:id="@+id/editTextCreateEventSubtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
                 android:background="@drawable/background_edittext"
-                android:ems="10"
                 android:hint="Subtitle"
                 android:inputType="textPersonName"
+                android:layout_marginTop="16dp"
                 android:padding="8dp"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white" />
 
             <EditText
-                android:id="@+id/edt_event_date"
+                android:id="@+id/editTextCreateEventDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
                 android:background="@drawable/background_edittext"
                 android:clickable="true"
-                android:ems="10"
                 android:focusable="false"
                 android:hint="Date"
                 android:inputType="none"
+                android:layout_marginTop="16dp"
                 android:padding="8dp"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white" />
 
             <TextView
-                android:id="@+id/txt_error_date"
-                android:layout_width="wrap_content"
+                android:id="@+id/textViewErrorCreateEventDate"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
+                android:layout_gravity="left"
                 android:textColor="@color/errorRed"
                 android:textSize="16sp"
                 android:visibility="gone"/>
 
             <EditText
-                android:id="@+id/edt_address"
+                android:id="@+id/editTextCreateEventAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
                 android:background="@drawable/background_edittext"
-                android:ems="10"
                 android:hint="Address"
                 android:inputType="textPostalAddress"
+                android:layout_marginTop="16dp"
                 android:padding="8dp"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white" />
 
             <TextView
-                android:id="@+id/txt_error_address"
-                android:layout_width="wrap_content"
+                android:id="@+id/textViewErrorCreateEventAddress"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
                 android:textColor="@color/errorRed"
+                android:layout_gravity="left"
                 android:textSize="16sp"
                 android:visibility="gone"/>
 
             <EditText
-                android:id="@+id/edt_description"
+                android:id="@+id/editTextCreateEventDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
                 android:background="@drawable/background_edittext"
-                android:ems="10"
                 android:hint="Description"
                 android:inputType="textMultiLine"
                 android:lines="4"
-                android:padding="12dp"
+                android:layout_marginTop="16dp"
+                android:padding="8dp"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white" />
 
@@ -131,17 +124,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="16dp"
                 android:background="@drawable/background_button"
                 android:onClick="handleOnClickCreateEvent"
+                android:layout_marginTop="16dp"
                 android:padding="8dp"
                 android:text="Create an Event"
                 android:textColor="@android:color/white" />
 
+            <TextView
+                android:id="@+id/textViewErrorCreateEvent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/errorRed"
+                android:textSize="16sp"
+                android:visibility="gone"/>
+            
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="150dp"/>
         </LinearLayout>
 
-    </LinearLayout>
-
+    </ScrollView>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayoutLoading"

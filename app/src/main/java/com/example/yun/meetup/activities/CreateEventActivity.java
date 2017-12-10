@@ -30,15 +30,17 @@ public class CreateEventActivity extends AppCompatActivity {
 
     private ConstraintLayout constraintLayoutLoading;
 
-    EditText edtTitle;
-    EditText edtSubTitle;
-    EditText edtDate;
-    EditText edtAddress;
-    EditText edtDescription;
+    private EditText editTextCreateEventTitle;
+    private EditText editTextCreateEventSubtitle;
+    private EditText editTextCreateEventDate;
+    private EditText editTextCreateEventAddress;
+    private EditText editTextCreateEventDescription;
 
-    TextView txtErrorTitle;
-    TextView txtErrorDate;
-    TextView txtErrorAddress;
+    private TextView textViewErrorCreateEventTitle;
+    private TextView textViewErrorCreateEventDate;
+    private TextView textViewErrorCreateEventAddress;
+    private TextView textViewErrorCreateEvent;
+
 
     Calendar calendar = Calendar.getInstance();
 
@@ -49,24 +51,26 @@ public class CreateEventActivity extends AppCompatActivity {
 
         constraintLayoutLoading = (ConstraintLayout) findViewById(R.id.constraintLayoutLoading);
 
-        edtTitle = (EditText) findViewById(R.id.edit_event_title);
-        txtErrorTitle = (TextView) findViewById(R.id.txt_error_title);
+        editTextCreateEventTitle = (EditText) findViewById(R.id.editTextCreateEventTitle);
+        textViewErrorCreateEventTitle = (TextView) findViewById(R.id.textViewErrorCreateEventTitle);
 
-        edtSubTitle = (EditText) findViewById(R.id.edit_event_subtitle);
+        editTextCreateEventSubtitle = (EditText) findViewById(R.id.editTextCreateEventSubtitle);
 
-        edtDate = (EditText) findViewById(R.id.edt_event_date);
-        edtDate.setOnClickListener(new View.OnClickListener() {
+        editTextCreateEventDate = (EditText) findViewById(R.id.editTextCreateEventDate);
+        editTextCreateEventDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDateTimePicker();
             }
         });
-        txtErrorDate = (TextView) findViewById(R.id.txt_error_date);
+        textViewErrorCreateEventDate = (TextView) findViewById(R.id.textViewErrorCreateEventDate);
 
-        edtAddress = (EditText) findViewById(R.id.edt_address);
-        txtErrorAddress = (TextView) findViewById(R.id.txt_error_address);
+        editTextCreateEventAddress = (EditText) findViewById(R.id.editTextCreateEventAddress);
+        textViewErrorCreateEventAddress = (TextView) findViewById(R.id.textViewErrorCreateEventAddress);
 
-        edtDescription = (EditText) findViewById(R.id.edt_description);
+        editTextCreateEventDescription = (EditText) findViewById(R.id.editTextCreateEventDescription);
+
+        textViewErrorCreateEvent = (TextView) findViewById(R.id.textViewErrorCreateEvent);
     }
 
     public void showDateTimePicker() {
@@ -87,7 +91,7 @@ public class CreateEventActivity extends AppCompatActivity {
                         calendar.set(Calendar.MINUTE, minute);
                         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy HH:mm", Locale.CANADA);
 
-                        edtDate.setText(sdf.format(calendar.getTime()));
+                        editTextCreateEventDate.setText(sdf.format(calendar.getTime()));
                     }
                 }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false).show();
             }
@@ -99,19 +103,19 @@ public class CreateEventActivity extends AppCompatActivity {
 
         boolean error = false;
 
-        if (edtTitle.getText().toString().isEmpty()) {
-            txtErrorTitle.setText("Please provide a valid Title for your event!");
-            txtErrorTitle.setVisibility(View.VISIBLE);
+        if (editTextCreateEventTitle.getText().toString().isEmpty()) {
+            textViewErrorCreateEventTitle.setText("Please provide a valid Title for your event!");
+            textViewErrorCreateEventTitle.setVisibility(View.VISIBLE);
             error = true;
         }
-        if (edtDate.getText().toString().isEmpty()) {
-            txtErrorDate.setText("Please provide a Date for your event!");
-            txtErrorDate.setVisibility(View.VISIBLE);
+        if (editTextCreateEventDate.getText().toString().isEmpty()) {
+            textViewErrorCreateEventDate.setText("Please provide a Date for your event!");
+            textViewErrorCreateEventDate.setVisibility(View.VISIBLE);
             error = true;
         }
-        if (edtAddress.getText().toString().isEmpty()) {
-            txtErrorAddress.setText("Please provide an Address for your event!");
-            txtErrorAddress.setVisibility(View.VISIBLE);
+        if (editTextCreateEventAddress.getText().toString().isEmpty()) {
+            textViewErrorCreateEventAddress.setText("Please provide an Address for your event!");
+            textViewErrorCreateEventAddress.setVisibility(View.VISIBLE);
             error = true;
         }
 
@@ -120,11 +124,11 @@ public class CreateEventActivity extends AppCompatActivity {
 
             SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
             createEventRequest.setHost_id(sharedPreferences.getString("id", null));
-            createEventRequest.setTitle(edtTitle.getText().toString());
-            createEventRequest.setSubtitle(edtSubTitle.getText().toString());
-            createEventRequest.setDate(edtDate.getText().toString());
-            createEventRequest.setAddress(edtAddress.getText().toString());
-            createEventRequest.setDescription(edtDescription.getText().toString());
+            createEventRequest.setTitle(editTextCreateEventTitle.getText().toString());
+            createEventRequest.setSubtitle(editTextCreateEventSubtitle.getText().toString());
+            createEventRequest.setDate(editTextCreateEventDate.getText().toString());
+            createEventRequest.setAddress(editTextCreateEventAddress.getText().toString());
+            createEventRequest.setDescription(editTextCreateEventDescription.getText().toString());
 
             constraintLayoutLoading.setVisibility(View.VISIBLE);
 
@@ -134,10 +138,11 @@ public class CreateEventActivity extends AppCompatActivity {
     }
 
     public void hideViews() {
-        txtErrorAddress.setVisibility(View.GONE);
-        txtErrorDate.setVisibility(View.GONE);
-        txtErrorTitle.setVisibility(View.GONE);
+        textViewErrorCreateEventAddress.setVisibility(View.GONE);
+        textViewErrorCreateEventDate.setVisibility(View.GONE);
+        textViewErrorCreateEventTitle.setVisibility(View.GONE);
         constraintLayoutLoading.setVisibility(View.GONE);
+        textViewErrorCreateEvent.setVisibility(View.GONE);
     }
 
     private class ValidateAddressTask extends AsyncTask<CreateEventRequest, Void, APIResult> {
@@ -156,8 +161,8 @@ public class CreateEventActivity extends AppCompatActivity {
             }
             else {
                 hideViews();
-                txtErrorAddress.setText(result != null ? result.getResultMessage() : "Please contact admin staff!");
-                txtErrorAddress.setVisibility(View.VISIBLE);
+                textViewErrorCreateEventAddress.setText(result != null ? result.getResultMessage() : "Please contact admin staff!");
+                textViewErrorCreateEventAddress.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -180,8 +185,8 @@ public class CreateEventActivity extends AppCompatActivity {
                 Toast.makeText(CreateEventActivity.this, "Event created successfully!", Toast.LENGTH_SHORT).show();
                 CreateEventActivity.this.finish();
             } else {
-                txtErrorTitle.setText(result != null ? result.getResultMessage() : "Please contact admin staff!");
-                txtErrorTitle.setVisibility(View.VISIBLE);
+                textViewErrorCreateEvent.setText(result != null ? result.getResultMessage() : "Please contact admin staff!");
+                textViewErrorCreateEvent.setVisibility(View.VISIBLE);
             }
         }
     }
