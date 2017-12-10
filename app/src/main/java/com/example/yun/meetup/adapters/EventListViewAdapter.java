@@ -54,7 +54,7 @@ public class EventListViewAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return Long.parseLong(mEvents.get(position).getID());
+        return Long.parseLong(mEvents.get(position).get_id());
     }
 
     @Override
