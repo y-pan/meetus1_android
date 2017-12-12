@@ -5,16 +5,16 @@ package com.example.yun.meetup.models;
  */
 
 public class Event {
-    private String _id;
-    private String title;
-    private String description;
-    private String subtitle;
-    private String host_id;
-    private UserInfo userInfo;
-    private float latitude;
-    private float longitude;
-    private String address;
-    private String date;
+    private String _id = "";
+    private String title = "";
+    private String description = "";
+    private String subtitle = "";
+    private String host_id = "";
+    private UserInfo userInfo = new UserInfo();
+    private float latitude = 0;
+    private float longitude = 0;
+    private String address = "";
+    private String date = "";
 
     public String get_id() {
         return _id;
