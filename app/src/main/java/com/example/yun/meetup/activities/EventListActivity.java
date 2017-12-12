@@ -10,7 +10,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.yun.meetup.R;
 import com.example.yun.meetup.adapters.EventListViewAdapter;
@@ -27,6 +29,7 @@ public class EventListActivity extends AppCompatActivity {
 
     private ListView listViewEvents;
     private ConstraintLayout constraintLayoutEventListLoading;
+    private List<Event> listEvents;
 
 
     @Override
@@ -54,47 +57,12 @@ public class EventListActivity extends AppCompatActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-////          DUMMY DATA
-//
-//        Event[] eventList = new Event[]{
-//                new Event(),
-//                new Event(),
-//                new Event(),
-//                new Event(),
-//                new Event()
-//        };
-//
-//        UserInfo userInfo;
-//        userInfo = new UserInfo();
-//        userInfo.setName("Nice Professor");
-//
-//        eventList[0].set_id("111");
-//        eventList[0].setTitle("Nice Project Class");
-//        eventList[0].setUserInfo(userInfo);
-//        eventList[0].setDate("01/01/2013");
-//        eventList[0].setAddress("941 Progress Ave, Toronto, ON M1K 5E9");
-//        eventList[1].set_id("222");
-//        eventList[1].setTitle("Nice Project Class");
-//        eventList[1].setUserInfo(userInfo);
-//        eventList[1].setDate("01/01/2013");
-//        eventList[1].setAddress("941 Progress Ave, Toronto, ON M1K 5E9");
-//        eventList[2].set_id("333");
-//        eventList[2].setTitle("Nice Project Class");
-//        eventList[2].setUserInfo(userInfo);
-//        eventList[2].setDate("01/01/2013");
-//        eventList[2].setAddress("941 Progress Ave, Toronto, ON M1K 5E9");
-//        eventList[3].set_id("444");
-//        eventList[3].setTitle("Nice Project Class");
-//        eventList[3].setUserInfo(userInfo);
-//        eventList[3].setDate("01/01/2013");
-//        eventList[3].setAddress("941 Progress Ave, Toronto, ON M1K 5E9");
-//        eventList[4].set_id("555");
-//        eventList[4].setTitle("Nice Project Class");
-//        eventList[4].setUserInfo(userInfo);
-//        eventList[4].setDate("01/01/2013");
-//        eventList[4].setAddress("941 Progress Ave, Toronto, ON M1K 5E9");
-//
-//        // DUMMY DATA END
+        listViewEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(EventListActivity.this, "Selected event: " + listEvents.get(i).getTitle(), Toast.LENGTH_LONG).show();
+            }
+        });
 
         EventListRequest eventListRequest = new EventListRequest();
 
@@ -119,7 +87,7 @@ public class EventListActivity extends AppCompatActivity {
 
             if (apiResult.isResultSuccess()){
 
-                List<Event> listEvents = (List<Event>) apiResult.getResultEntity();
+                listEvents = (List<Event>) apiResult.getResultEntity();
 
                 EventListViewAdapter adapter = new EventListViewAdapter(listEvents, getApplicationContext());
 
