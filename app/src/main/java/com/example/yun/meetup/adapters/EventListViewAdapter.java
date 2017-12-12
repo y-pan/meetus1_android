@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.yun.meetup.R;
 import com.example.yun.meetup.models.Event;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -54,7 +55,7 @@ public class EventListViewAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return Long.parseLong(mEvents.get(position).get_id());
+        return new BigInteger(mEvents.get(position).get_id(), 16).longValue();
     }
 
     @Override
