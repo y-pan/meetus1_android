@@ -7,6 +7,7 @@ import com.example.yun.meetup.models.Event;
 import com.example.yun.meetup.models.UserInfo;
 import com.example.yun.meetup.providers.ApiProvider;
 import com.example.yun.meetup.requests.CreateEventRequest;
+import com.example.yun.meetup.requests.EventListRequest;
 import com.example.yun.meetup.requests.LoginRequest;
 import com.example.yun.meetup.requests.RegistrationRequest;
 import com.google.gson.Gson;
@@ -18,6 +19,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 public class NetworkManager {
 
@@ -124,6 +127,8 @@ public class NetworkManager {
         Gson gson = builder.create();
         String json = gson .toJson(createEventRequest);
 
+        APIResult apiResult = new APIResult(false, "Failed creating the event: please try again", null);
+
         try {
 
             String response = apiProvider.sendRequest("/event", "POST", json);
@@ -134,21 +139,50 @@ public class NetworkManager {
 
                 Event event = gson.fromJson(responseJSON.getJSONObject("data").toString(), Event.class);
 
-                return new APIResult(true, APIResult.RESULT_SUCCESS, event);
+                apiResult = new APIResult(true, APIResult.RESULT_SUCCESS, event);
 
             }
-            else if (!responseJSON.isNull("err")) {
-                return new APIResult(false, responseJSON.getString("err"), null);
-            }
         }
-        catch (JSONException e) {
-            return new APIResult(false, e.getMessage(), null);
-        }
-        catch (IOException e) {
+        catch (JSONException | IOException e) {
             e.printStackTrace();
         }
 
-        return new APIResult(false, "Fatal error, please contact the admin staff!", null);
+        return apiResult;
+    }
+
+    public APIResult getHostedEvents(EventListRequest eventListRequest){
+
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        String json = gson .toJson(eventListRequest);
+
+        APIResult apiResult = new APIResult(false, "Failed getting list of hosted events: please try again", null);
+
+        try {
+
+            String response = apiProvider.sendRequest("/host_event", "POST", json);
+
+            JSONObject responseJSON = new JSONObject(response);
+
+            if (!responseJSON.isNull("data")) {
+
+                Event[] arrayEvent = gson.fromJson(responseJSON.getJSONArray("data").toString(), Event[].class);
+
+                List<Event> listEvents = new ArrayList<>();
+
+                for (Event event : arrayEvent){
+                    listEvents.add(event);
+                }
+
+                apiResult = new APIResult(true, APIResult.RESULT_SUCCESS, listEvents);
+
+            }
+        }
+        catch (JSONException | IOException e) {
+            e.printStackTrace();
+        }
+
+        return apiResult;
     }
 
 
