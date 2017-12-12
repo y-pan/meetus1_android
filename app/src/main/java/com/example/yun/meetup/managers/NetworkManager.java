@@ -168,13 +168,25 @@ public class NetworkManager {
 
                 Event[] arrayEvent = gson.fromJson(responseJSON.getJSONArray("data").toString(), Event[].class);
 
-                List<Event> listEvents = new ArrayList<>();
+                if (arrayEvent.length > 0){
+                    response = apiProvider.sendRequest("/user?id=" + eventListRequest.getHost_id(), "GET", null);
 
-                for (Event event : arrayEvent){
-                    listEvents.add(event);
+                    responseJSON = new JSONObject(response);
+
+                    if (!responseJSON.isNull("data")) {
+
+                        UserInfo userInfo = gson.fromJson(responseJSON.getJSONObject("data").toString(), UserInfo.class);
+
+                        List<Event> listEvents = new ArrayList<>();
+
+                        for (Event event : arrayEvent){
+                            event.setUserInfo(userInfo);
+                            listEvents.add(event);
+                        }
+
+                        apiResult = new APIResult(true, APIResult.RESULT_SUCCESS, listEvents);
+                    }
                 }
-
-                apiResult = new APIResult(true, APIResult.RESULT_SUCCESS, listEvents);
 
             }
         }
