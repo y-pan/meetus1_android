@@ -61,6 +61,9 @@ public class EventListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(EventListActivity.this, "Selected event: " + listEvents.get(i).getTitle(), Toast.LENGTH_LONG).show();
+
+                Intent intent = new Intent(EventListActivity.this, EventDetailsActivity.class);
+                startActivity(intent);
             }
         });
 
