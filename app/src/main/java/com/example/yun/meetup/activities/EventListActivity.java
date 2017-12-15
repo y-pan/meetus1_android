@@ -31,7 +31,6 @@ public class EventListActivity extends AppCompatActivity {
     private ConstraintLayout constraintLayoutEventListLoading;
     private List<Event> listEvents;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +72,6 @@ public class EventListActivity extends AppCompatActivity {
         eventListRequest.setHost_id(sharedPreferences.getString("id", null));
 
         new EventListTask().execute(eventListRequest);
-
 
     }
 

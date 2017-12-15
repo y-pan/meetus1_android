@@ -26,6 +26,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
+        fabParticipate = findViewById(R.id.fab_event_detail_participate);
 
 //        This code should run after get the EVENT NAME or from Intent or Database
         setSupportActionBar(toolbar);
@@ -36,15 +37,16 @@ public class EventDetailsActivity extends AppCompatActivity {
 
 //        END
 
+        //TODO:
 //        Participate of an Event button
 //        If the User will alraedy checked to participate of this event, the icon color shouldo be WHITE.
 //        Otherwise it is gonna be GREY
 
-        boolean isParticipating = true;
+        /*        
         if(isParticipating){
             fabParticipate.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_person_add_white_24dp));
         }else{
             fabParticipate.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_person_add_grey_500_24dp));
-        }
+        }*/
     }
 }
