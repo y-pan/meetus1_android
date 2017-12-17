@@ -10,6 +10,7 @@ import com.example.yun.meetup.requests.CreateEventRequest;
 import com.example.yun.meetup.requests.EventListRequest;
 import com.example.yun.meetup.requests.LoginRequest;
 import com.example.yun.meetup.requests.RegistrationRequest;
+import com.example.yun.meetup.requests.SearchEventsRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -186,6 +187,42 @@ public class NetworkManager {
 
                         apiResult = new APIResult(true, APIResult.RESULT_SUCCESS, listEvents);
                     }
+                }
+
+            }
+        }
+        catch (JSONException | IOException e) {
+            e.printStackTrace();
+        }
+
+        return apiResult;
+    }
+
+    public APIResult searchEvents(SearchEventsRequest searchEventsRequest){
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+
+        APIResult apiResult = new APIResult(false, "Failed getting events around you: please try again", null);
+
+        try {
+
+            String response = apiProvider.sendRequest("/event/search?latitude=" + searchEventsRequest.getLatitude() + "&longitude=" + searchEventsRequest.getLongitude() + "&distance=" + searchEventsRequest.getDistance(), "GET", null);
+
+            JSONObject responseJSON = new JSONObject(response);
+
+            if (!responseJSON.isNull("data")) {
+
+                Event[] arrayEvent = gson.fromJson(responseJSON.getJSONArray("data").toString(), Event[].class);
+
+                if (arrayEvent.length > 0){
+
+                    List<Event> listEvents = new ArrayList<>();
+
+                    for (Event event : arrayEvent){
+                        listEvents.add(event);
+                    }
+
+                    apiResult = new APIResult(true, APIResult.RESULT_SUCCESS, listEvents);
                 }
 
             }
