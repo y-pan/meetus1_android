@@ -31,6 +31,7 @@
             android:layout_margin="8dp"
             android:background="@drawable/background_button"
             android:text="Search an Event"
+            android:onClick="handleOnClickSearchEvent"
             android:textColor="@android:color/white" />
 
         <Button
@@ -40,6 +41,7 @@
             android:layout_margin="8dp"
             android:background="@drawable/background_button"
             android:text="My subscribed events "
+            android:onClick="handleOnClickMySubscribedEvents"
             android:textColor="@android:color/white" />
 
         <Button
@@ -74,4 +76,19 @@
 
 
     </LinearLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayoutMainLoading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:alpha="0.5">
+        <ProgressBar
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+    </android.support.constraint.ConstraintLayout>
 </FrameLayout>
