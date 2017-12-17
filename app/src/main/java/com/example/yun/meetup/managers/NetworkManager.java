@@ -234,5 +234,45 @@ public class NetworkManager {
         return apiResult;
     }
 
+    public APIResult getEventById(String id){
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+
+        APIResult apiResult = new APIResult(false, "Failed getting events details: please try again", null);
+
+        try{
+            String response = apiProvider.sendRequest("/event?id=" + id, "GET", null);
+
+            JSONObject responseJSON = new JSONObject(response);
+
+            if (!responseJSON.isNull("data")) {
+
+                Event event = gson.fromJson(responseJSON.getJSONObject("data").toString(), Event.class);
+
+                response = apiProvider.sendRequest("/user?id=" + event.getHost_id(), "GET", null);
+
+                responseJSON = new JSONObject(response);
+
+                apiResult = new APIResult(true, APIResult.RESULT_SUCCESS, event);
+
+                if (!responseJSON.isNull("data")) {
+
+                    UserInfo userInfo = gson.fromJson(responseJSON.getJSONObject("data").toString(), UserInfo.class);
+
+                    event.setUserInfo(userInfo);
+
+                    apiResult = new APIResult(true, APIResult.RESULT_SUCCESS, event);
+
+                }
+
+            }
+        }
+        catch (JSONException | IOException e) {
+            e.printStackTrace();
+        }
+
+        return apiResult;
+    }
+
 
 }

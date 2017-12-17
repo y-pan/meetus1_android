@@ -38,7 +38,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.yun.meetup.activities.MainActivity" />
         </activity>
-        <activity android:name=".activities.EventDetailsActivity" />
+        <activity
+            android:name=".activities.EventDetailsActivity"
+            android:label="EventDetailsActivity"
+            android:parentActivityName=".activities.SearchEventsActivity"
+            android:theme="@style/AppTheme">
+                <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="com.example.yun.meetup.activities.MainActivity" />
+        </activity>
         <activity
             android:name=".activities.MySubscribedEventsActivity"
             android:label="@string/title_activity_my_subscribed_events"
@@ -62,7 +70,9 @@
 
         <activity
             android:name=".activities.SearchEventsActivity"
-            android:label="@string/title_activity_search_events"></activity>
+            android:label="@string/title_activity_search_events">
+
+        </activity>
     </application>
 
 </manifest>

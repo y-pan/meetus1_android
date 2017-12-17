@@ -8,7 +8,7 @@ public class SearchEventsRequest {
 
     private double latitude = 0;
     private double longitude = 0;
-    private double distance = 50;
+    private double distance = 50000;
 
     public double getLatitude() {
         return latitude;
