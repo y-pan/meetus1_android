@@ -9,6 +9,7 @@ import com.example.yun.meetup.providers.ApiProvider;
 import com.example.yun.meetup.requests.CreateEventRequest;
 import com.example.yun.meetup.requests.EventListRequest;
 import com.example.yun.meetup.requests.LoginRequest;
+import com.example.yun.meetup.requests.ParticipateToEventRequest;
 import com.example.yun.meetup.requests.RegistrationRequest;
 import com.example.yun.meetup.requests.SearchEventsRequest;
 import com.google.gson.Gson;
@@ -17,6 +18,7 @@ import com.google.gson.GsonBuilder;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -234,6 +236,32 @@ public class NetworkManager {
         return apiResult;
     }
 
+    public APIResult getUserById(String id){
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+
+        APIResult apiResult = new APIResult(false, "Failed getting user info: please try again", null);
+
+        try{
+            String response = apiProvider.sendRequest("/user?id=" + id, "GET", null);
+
+            JSONObject responseJSON = new JSONObject(response);
+
+            if (!responseJSON.isNull("data")){
+                UserInfo userInfo = gson.fromJson(responseJSON.getJSONObject("data").toString(), UserInfo.class);
+
+                apiResult = new APIResult(true, APIResult.RESULT_SUCCESS, userInfo);
+
+            }
+        }
+        catch (JSONException | IOException e) {
+            e.printStackTrace();
+        }
+
+        return apiResult;
+
+    }
+
     public APIResult getEventById(String id){
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
@@ -249,20 +277,24 @@ public class NetworkManager {
 
                 Event event = gson.fromJson(responseJSON.getJSONObject("data").toString(), Event.class);
 
-                response = apiProvider.sendRequest("/user?id=" + event.getHost_id(), "GET", null);
+                APIResult hostResult = getUserById(event.getHost_id());
 
-                responseJSON = new JSONObject(response);
+                if (hostResult.isResultSuccess()){
+                    event.setUserInfo((UserInfo) hostResult.getResultEntity());
 
-                apiResult = new APIResult(true, APIResult.RESULT_SUCCESS, event);
+                    if (!responseJSON.getJSONObject("data").isNull("members")){
+                       String[] memberIds = gson.fromJson(responseJSON.getJSONObject("data").getJSONArray("members").toString(), String[].class);
 
-                if (!responseJSON.isNull("data")) {
+                       for (String memberId : memberIds){
+                           APIResult memberResult = getUserById(memberId);
 
-                    UserInfo userInfo = gson.fromJson(responseJSON.getJSONObject("data").toString(), UserInfo.class);
+                           if (memberResult.isResultSuccess()){
+                               event.getMembers().add((UserInfo) memberResult.getResultEntity());
+                           }
+                       }
 
-                    event.setUserInfo(userInfo);
-
-                    apiResult = new APIResult(true, APIResult.RESULT_SUCCESS, event);
-
+                       apiResult = new APIResult(true, APIResult.RESULT_SUCCESS, event);
+                    }
                 }
 
             }
@@ -274,5 +306,29 @@ public class NetworkManager {
         return apiResult;
     }
 
+    public APIResult participateToEvent(ParticipateToEventRequest participateToEventRequest){
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        String json = gson .toJson(participateToEventRequest);
+
+        APIResult apiResult = new APIResult(false, "Error participating to the event: please try again", null);
+
+        try{
+            String response = apiProvider.sendRequest("/event/subscribe", "POST", json);
+
+            JSONObject jsonObject = new JSONObject(json);
+
+            if (!jsonObject.isNull("data")){
+                Event event = gson.fromJson(jsonObject.getJSONObject("data").toString(), Event.class);
+
+                apiResult = new APIResult(true, APIResult.RESULT_SUCCESS, event);
+            }
+        }
+        catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+
+        return apiResult;
+    }
 
 }
