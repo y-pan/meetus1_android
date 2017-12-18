@@ -1,5 +1,11 @@
 package com.example.yun.meetup.models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by alessio on 05-Dec-17.
  */
@@ -15,6 +21,11 @@ public class Event {
     private float longitude = 0;
     private String address = "";
     private String date = "";
+
+    @SerializedName("members")
+    private List<String> memberIds = new ArrayList<>();
+
+    private transient List<UserInfo> members = new ArrayList<>();
 
     public String get_id() {
         return _id;
@@ -94,5 +105,21 @@ public class Event {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public List<String> getMemberIds() {
+        return memberIds;
+    }
+
+    public void setMemberIds(List<String> memberIds) {
+        this.memberIds = memberIds;
+    }
+
+    public List<UserInfo> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<UserInfo> members) {
+        this.members = members;
     }
 }
