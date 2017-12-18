@@ -223,9 +223,10 @@
             android:clickable="true"
             app:elevation="20dp"
             app:pressedTranslationZ="12dp"
-            android:src="@drawable/ic_person_add_grey_500_24dp"
+            android:src="@drawable/ic_person_add_white_24dp"
             app:layout_anchor="@id/app_bar_layout"
-            app:layout_anchorGravity="bottom|right|end"/>
+            app:layout_anchorGravity="bottom|right|end"
+            android:onClick="handleOnClickParticipate"/>
 
     </android.support.design.widget.CoordinatorLayout>
 

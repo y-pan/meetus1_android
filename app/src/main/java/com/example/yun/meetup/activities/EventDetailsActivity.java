@@ -1,5 +1,7 @@
 package com.example.yun.meetup.activities;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -17,6 +19,8 @@ import com.example.yun.meetup.R;
 import com.example.yun.meetup.managers.NetworkManager;
 import com.example.yun.meetup.models.APIResult;
 import com.example.yun.meetup.models.Event;
+import com.example.yun.meetup.models.UserInfo;
+import com.example.yun.meetup.requests.ParticipateToEventRequest;
 
 import static java.security.AccessController.getContext;
 
@@ -33,6 +37,9 @@ public class EventDetailsActivity extends AppCompatActivity {
     private TextView textViewDetailHostName;
     private TextView textViewDetailSubtitle;
     private TextView textViewDetailDescription;
+
+    private String userId;
+    private String eventId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +58,12 @@ public class EventDetailsActivity extends AppCompatActivity {
         textViewDetailSubtitle = (TextView) findViewById(R.id.txt_subtitle);
         textViewDetailDescription = (TextView) findViewById(R.id.txt_description);
 
-
-
-        String eventId = getIntent().getExtras().getString("eventId");
-
+        SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        userId = sharedPreferences.getString("id", null);
 
 
 
+        eventId = getIntent().getExtras().getString("eventId");
 
 //        This code should run after get the EVENT NAME or from Intent or Database
         setSupportActionBar(toolbar);
@@ -83,6 +89,16 @@ public class EventDetailsActivity extends AppCompatActivity {
 
     public void hideViews(){
         constraintLayoutDetailsLoading.setVisibility(View.GONE);
+    }
+
+    public void handleOnClickParticipate(View view) {
+
+        constraintLayoutDetailsLoading.setVisibility(View.VISIBLE);
+
+        ParticipateToEventRequest participateToEventRequest = new ParticipateToEventRequest();
+        participateToEventRequest.setEvent_id(eventId);
+        participateToEventRequest.setUser_id(userId);
+        new ParticipateToEventTask().execute(participateToEventRequest);
     }
 
     private class GetEventTask extends AsyncTask<String, Void, APIResult>{
@@ -112,6 +128,40 @@ public class EventDetailsActivity extends AppCompatActivity {
                 textViewDetailSubtitle.setText(event.getSubtitle());
                 textViewDetailDescription.setText(event.getDescription());
 
+                // TODO Update member list
+
+                if (userId.equals(event.getHost_id())){
+                    fabParticipate.setVisibility(View.GONE);
+                }
+                else{
+                    for(UserInfo member : event.getMembers()){
+                        if (userId.equals(member.get_id())){
+                            fabParticipate.setVisibility(View.GONE);
+                            break;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    private class ParticipateToEventTask extends AsyncTask<ParticipateToEventRequest, Void, APIResult>{
+
+        @Override
+        protected APIResult doInBackground(ParticipateToEventRequest... participateToEventRequests) {
+            NetworkManager networkManager = new NetworkManager();
+            return networkManager.participateToEvent(participateToEventRequests[0]);
+        }
+
+        @Override
+        protected void onPostExecute(APIResult apiResult) {
+
+            if (!apiResult.isResultSuccess()){
+                Toast.makeText(EventDetailsActivity.this, apiResult.getResultMessage(), Toast.LENGTH_LONG).show();
+            }
+            else{
+                new GetEventTask().execute(eventId);
             }
         }
     }

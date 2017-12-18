@@ -57,6 +57,7 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
         double longitude = getIntent().getDoubleExtra("currentLongitude", 0);
 
         currentLocation = new LatLng(latitude, longitude);
+//        currentLocation = new LatLng(43.684201, -79.318706);
 
 
 
