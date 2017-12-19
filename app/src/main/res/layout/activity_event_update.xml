@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/main_background"
-    tools:context=".activities.CreateEventActivity">
+    tools:context="com.example.yun.meetup.activities.EventUpdateActivity">
 
     <ScrollView
         android:background="@drawable/gradient_background"
@@ -21,17 +21,17 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textViewCreateEventTitle"
+                android:id="@+id/textViewUpdateEventTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Create an Event"
+                android:text="Update an Event"
                 android:textColor="@color/white"
                 android:textSize="32sp"
                 android:layout_gravity="center"/>
 
             <EditText
-                android:id="@+id/editTextCreateEventTitle"
+                android:id="@+id/edt_update_event_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_edittext"
@@ -43,7 +43,7 @@
                 android:textColorHint="@android:color/white" />
 
             <TextView
-                android:id="@+id/textViewErrorCreateEventTitle"
+                android:id="@+id/txt_error_update_event_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
@@ -52,7 +52,7 @@
                 android:visibility="gone"/>
 
             <EditText
-                android:id="@+id/editTextCreateEventSubtitle"
+                android:id="@+id/edt_update_event_subtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_edittext"
@@ -64,7 +64,7 @@
                 android:textColorHint="@android:color/white" />
 
             <EditText
-                android:id="@+id/editTextCreateEventDate"
+                android:id="@+id/edt_update_event_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_edittext"
@@ -78,7 +78,7 @@
                 android:textColorHint="@android:color/white" />
 
             <TextView
-                android:id="@+id/textViewErrorCreateEventDate"
+                android:id="@+id/txt_error_update_event_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
@@ -87,7 +87,7 @@
                 android:visibility="gone"/>
 
             <EditText
-                android:id="@+id/editTextCreateEventAddress"
+                android:id="@+id/edt_update_event_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_edittext"
@@ -99,7 +99,7 @@
                 android:textColorHint="@android:color/white" />
 
             <TextView
-                android:id="@+id/textViewErrorCreateEventAddress"
+                android:id="@+id/txt_error_update_event_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/errorRed"
@@ -108,7 +108,7 @@
                 android:visibility="gone"/>
 
             <EditText
-                android:id="@+id/editTextCreateEventDescription"
+                android:id="@+id/edt_update_event_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_edittext"
@@ -121,26 +121,25 @@
                 android:textColorHint="@android:color/white" />
 
             <Button
-                android:id="@+id/buttonCreateEvent"
+                android:id="@+id/btn_update_event"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@drawable/background_button"
-                android:onClick="handleOnClickCreateEvent"
                 android:layout_marginTop="16dp"
                 android:padding="8dp"
-                android:text="Create an Event"
+                android:text="Update Event"
                 android:textColor="@android:color/white" />
 
             <TextView
-                android:id="@+id/textViewErrorCreateEvent"
+                android:id="@+id/txt_error_update_event"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textColor="@color/errorRed"
                 android:textSize="16sp"
                 android:visibility="gone"/>
-            
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="150dp"/>
@@ -164,5 +163,4 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
-
 </FrameLayout>

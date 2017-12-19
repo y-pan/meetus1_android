@@ -62,6 +62,7 @@ public class EventListActivity extends AppCompatActivity {
                 Toast.makeText(EventListActivity.this, "Selected event: " + listEvents.get(i).getTitle(), Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(EventListActivity.this, EventDetailsActivity.class);
+                intent.putExtra("eventID", listEvents.get(i).get_id());
                 startActivity(intent);
             }
         });

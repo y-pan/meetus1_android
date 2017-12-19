@@ -12,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,9 +39,12 @@ public class EventDetailsActivity extends AppCompatActivity {
     private TextView textViewDetailHostName;
     private TextView textViewDetailSubtitle;
     private TextView textViewDetailDescription;
+    private ListView listViewSubscribedUsers;
 
     private String userId;
     private String eventId;
+
+    ArrayAdapter<String> listviewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +62,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         textViewDetailHostName = (TextView) findViewById(R.id.txt_detail_event_host);
         textViewDetailSubtitle = (TextView) findViewById(R.id.txt_subtitle);
         textViewDetailDescription = (TextView) findViewById(R.id.txt_description);
+        listViewSubscribedUsers = (ListView) findViewById(R.id.lv_detail_subscribed_users);
 
         SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         userId = sharedPreferences.getString("id", null);
@@ -128,7 +134,13 @@ public class EventDetailsActivity extends AppCompatActivity {
                 textViewDetailSubtitle.setText(event.getSubtitle());
                 textViewDetailDescription.setText(event.getDescription());
 
+
+
                 // TODO Update member list
+
+                listviewAdapter = new ArrayAdapter<String>(EventDetailsActivity.this, android.R.layout.simple_list_item_1);
+                listviewAdapter.addAll(event.getMemberIds());
+                listViewSubscribedUsers.setAdapter(listviewAdapter);
 
                 if (userId.equals(event.getHost_id())){
                     fabParticipate.setVisibility(View.GONE);

@@ -73,7 +73,7 @@ public class CreateEventActivity extends AppCompatActivity {
         textViewErrorCreateEvent = (TextView) findViewById(R.id.textViewErrorCreateEvent);
     }
 
-    public void showDateTimePicker() {
+    private void showDateTimePicker() {
         /*
         * Making the DateTimePicker
         * */
