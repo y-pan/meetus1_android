@@ -316,7 +316,7 @@ public class NetworkManager {
         try{
             String response = apiProvider.sendRequest("/event/subscribe", "POST", json);
 
-            JSONObject jsonObject = new JSONObject(json);
+            JSONObject jsonObject = new JSONObject(response);
 
             if (!jsonObject.isNull("data")){
                 Event event = gson.fromJson(jsonObject.getJSONObject("data").toString(), Event.class);
@@ -325,6 +325,40 @@ public class NetworkManager {
             }
         }
         catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+
+        return apiResult;
+    }
+
+    public APIResult getSubscribedEvents(String guest_id){
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+
+        APIResult apiResult = new APIResult(false, "Error getting list of subscribed events: please try again", null);
+
+        try{
+            String response = apiProvider.sendRequest("/guest_event?id=" + guest_id, "GET", null);
+
+            JSONObject jsonObject = new JSONObject(response);
+
+            if (!jsonObject.isNull("data")){
+                Event[] events = gson.fromJson(jsonObject.getJSONArray("data").toString(), Event[].class);
+
+                if (events.length > 0){
+
+                    List<Event> listEvents = new ArrayList<>();
+
+                    for (Event event : events){
+                        listEvents.add(event);
+                    }
+
+                    apiResult = new APIResult(true, APIResult.RESULT_SUCCESS, listEvents);
+
+                }
+            }
+        }
+        catch (JSONException | IOException e) {
             e.printStackTrace();
         }
 
