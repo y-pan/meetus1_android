@@ -24,6 +24,9 @@ import com.example.yun.meetup.models.Event;
 import com.example.yun.meetup.models.UserInfo;
 import com.example.yun.meetup.requests.ParticipateToEventRequest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static java.security.AccessController.getContext;
 
 
@@ -134,26 +137,23 @@ public class EventDetailsActivity extends AppCompatActivity {
                 textViewDetailSubtitle.setText(event.getSubtitle());
                 textViewDetailDescription.setText(event.getDescription());
 
-
-
-                // TODO Update member list
-
-                listviewAdapter = new ArrayAdapter<String>(EventDetailsActivity.this, android.R.layout.simple_list_item_1);
-                listviewAdapter.addAll(event.getMemberIds());
-                listViewSubscribedUsers.setAdapter(listviewAdapter);
-
                 if (userId.equals(event.getHost_id())){
                     fabParticipate.setVisibility(View.GONE);
                 }
-                else{
-                    for(UserInfo member : event.getMembers()){
-                        if (userId.equals(member.get_id())){
-                            fabParticipate.setVisibility(View.GONE);
-                            break;
-                        }
+
+                List<String> listSubscribedUsers = new ArrayList<>();
+
+                for(UserInfo member : event.getMembers()){
+
+                    listSubscribedUsers.add(member.getName());
+
+                    if (userId.equals(member.get_id())){
+                        fabParticipate.setVisibility(View.GONE);
                     }
                 }
 
+                listviewAdapter = new ArrayAdapter<String>(EventDetailsActivity.this, android.R.layout.simple_list_item_1, listSubscribedUsers);
+                listViewSubscribedUsers.setAdapter(listviewAdapter);
             }
         }
     }
@@ -170,6 +170,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         protected void onPostExecute(APIResult apiResult) {
 
             if (!apiResult.isResultSuccess()){
+                hideViews();
                 Toast.makeText(EventDetailsActivity.this, apiResult.getResultMessage(), Toast.LENGTH_LONG).show();
             }
             else{

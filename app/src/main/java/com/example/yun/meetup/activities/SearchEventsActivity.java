@@ -1,7 +1,9 @@
 package com.example.yun.meetup.activities;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -39,6 +41,9 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
 
     private LatLng currentLocation;
 
+    private double latitude;
+    private double longitude;
+
 
 
     @Override
@@ -53,8 +58,9 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        double latitude = getIntent().getDoubleExtra("currentLatitude", 0);
-        double longitude = getIntent().getDoubleExtra("currentLongitude", 0);
+        SharedPreferences sharedPref = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        latitude = Double.parseDouble(sharedPref.getString("latitude", "0"));
+        longitude = Double.parseDouble(sharedPref.getString("longitude", "0"));
 
         currentLocation = new LatLng(latitude, longitude);
 //        currentLocation = new LatLng(43.684201, -79.318706);
@@ -98,6 +104,16 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
 
 
     }
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        if (currentLocation != null){
+//            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+//                    .findFragmentById(R.id.map);
+//            mapFragment.getMapAsync(this);
+//        }
+//    }
 
     public void hideViews(){
         constraintLayoutMapLoading.setVisibility(View.GONE);

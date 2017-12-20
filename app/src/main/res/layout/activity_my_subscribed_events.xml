@@ -39,7 +39,7 @@
 </android.support.design.widget.CoordinatorLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayoutEventListLoading"
+        android:id="@+id/constraintLayoutSubscribedEventstLoading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.5"

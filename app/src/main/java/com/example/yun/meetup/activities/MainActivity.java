@@ -36,10 +36,13 @@ public class MainActivity extends AppCompatActivity {
     private final LocationListener mLocationListener = new LocationListener() {
         @Override
         public void onLocationChanged(final Location location) {
-            if (currentLocation == null){
-                MainActivity.this.constraintLayoutMainLoading.setVisibility(View.GONE);
-                currentLocation = new Location(location);
-            }
+            MainActivity.this.constraintLayoutMainLoading.setVisibility(View.GONE);
+            currentLocation = new Location(location);
+            SharedPreferences sharedPref = MainActivity.this.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("latitude", "" + location.getLatitude());
+            editor.putString("longitude", "" + location.getLongitude());
+            editor.commit();
         }
 
         @Override
