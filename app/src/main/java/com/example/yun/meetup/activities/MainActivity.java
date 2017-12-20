@@ -147,5 +147,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void handleOnClickMySubscribedEvents(View view) {
+        Intent intent = new Intent(this, MySubscribedEventsActivity.class);
+        startActivity(intent);
     }
 }

@@ -59,8 +59,6 @@ public class EventListActivity extends AppCompatActivity {
         listViewEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(EventListActivity.this, "Selected event: " + listEvents.get(i).getTitle(), Toast.LENGTH_LONG).show();
-
                 Intent intent = new Intent(EventListActivity.this, EventDetailsActivity.class);
                 intent.putExtra("eventID", listEvents.get(i).get_id());
                 startActivity(intent);
@@ -87,6 +85,8 @@ public class EventListActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(APIResult apiResult) {
 
+            constraintLayoutEventListLoading.setVisibility(View.GONE);
+
             if (apiResult.isResultSuccess()){
 
                 listEvents = (List<Event>) apiResult.getResultEntity();
@@ -94,8 +94,6 @@ public class EventListActivity extends AppCompatActivity {
                 EventListViewAdapter adapter = new EventListViewAdapter(listEvents, getApplicationContext());
 
                 listViewEvents.setAdapter(adapter);
-
-                constraintLayoutEventListLoading.setVisibility(View.GONE);
 
             }
         }

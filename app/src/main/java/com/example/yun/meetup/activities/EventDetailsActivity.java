@@ -72,7 +72,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
 
 
-        eventId = getIntent().getExtras().getString("eventId");
+        eventId = getIntent().getExtras().getString("eventID");
 
 //        This code should run after get the EVENT NAME or from Intent or Database
         setSupportActionBar(toolbar);

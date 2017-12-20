@@ -52,13 +52,15 @@ public class MySubscribedEventsActivity extends AppCompatActivity {
             }
         });
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         SharedPreferences sharedPref = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
 
+        String userID = sharedPref.getString("id", "");
 
-        new MySubscribedEventsTask().execute(sharedPref.getString("id", ""));
-
+        if (!userID.isEmpty()){
+            new MySubscribedEventsTask().execute(sharedPref.getString("id", ""));
+        }
     }
 
     private class MySubscribedEventsTask extends AsyncTask<String, Void, APIResult>{
