@@ -35,6 +35,8 @@ public class EventDetailsActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private FloatingActionButton fabParticipate;
+    private FloatingActionButton fabEdit;
+    private FloatingActionButton fabDelete;
 
     private ConstraintLayout constraintLayoutDetailsLoading;
     private TextView textViewDetailAddress;
@@ -59,6 +61,8 @@ public class EventDetailsActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
         fabParticipate = findViewById(R.id.fab_event_detail_participate);
+        fabEdit = (FloatingActionButton) findViewById(R.id.fab_edit_event_details);
+        fabDelete = (FloatingActionButton) findViewById(R.id.fab_delete_event_details);
 
         textViewDetailAddress = (TextView) findViewById(R.id.txt_detail_event_address);
         textViewDetailDate = (TextView) findViewById(R.id.txt_detail_event_date);
@@ -139,6 +143,10 @@ public class EventDetailsActivity extends AppCompatActivity {
 
                 if (userId.equals(event.getHost_id())){
                     fabParticipate.setVisibility(View.GONE);
+                }
+                else{
+                    fabEdit.setVisibility(View.GONE);
+                    fabDelete.setVisibility(View.GONE);
                 }
 
                 List<String> listSubscribedUsers = new ArrayList<>();

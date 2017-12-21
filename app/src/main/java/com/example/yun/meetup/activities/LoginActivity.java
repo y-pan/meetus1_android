@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.yun.meetup.R;
@@ -32,6 +33,8 @@ public class LoginActivity extends AppCompatActivity {
     private TextView textViewLoginErrorEmail;
     private TextView textViewLoginErrorPassword;
 
+    private ScrollView scrollViewLogin;
+
 
 
     @Override
@@ -47,6 +50,8 @@ public class LoginActivity extends AppCompatActivity {
         textViewLoginError = (TextView) findViewById(R.id.textViewLoginError);
         textViewLoginErrorEmail = (TextView) findViewById(R.id.textViewLoginErrorEmail);
         textViewLoginErrorPassword = (TextView) findViewById(R.id.textViewloginErrorPassword);
+
+        scrollViewLogin = (ScrollView) findViewById(R.id.scrollViewLogin);
 
         SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         String name = sharedPreferences.getString("id", null);
@@ -81,6 +86,7 @@ public class LoginActivity extends AppCompatActivity {
             loginRequest.setPassword(editTextLoginPassword.getText().toString());
 
             constraintLayoutLoginLoading.setVisibility(View.VISIBLE);
+            scrollViewLogin.setClickable(false);
 
             new LoginTask().execute(loginRequest);
         }
@@ -96,6 +102,7 @@ public class LoginActivity extends AppCompatActivity {
         textViewLoginErrorEmail.setVisibility(View.GONE);
         textViewLoginErrorPassword.setVisibility(View.GONE);
         constraintLayoutLoginLoading.setVisibility(View.GONE);
+        scrollViewLogin.setClickable(true);
     }
 
     private class LoginTask extends AsyncTask<LoginRequest, Void, APIResult>{

@@ -11,6 +11,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -21,6 +22,7 @@ import com.example.yun.meetup.managers.NetworkManager;
 import com.example.yun.meetup.models.APIResult;
 import com.example.yun.meetup.models.Event;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MySubscribedEventsActivity extends AppCompatActivity {
@@ -31,6 +33,8 @@ public class MySubscribedEventsActivity extends AppCompatActivity {
     private ConstraintLayout constraintLayoutSubscribedEventsLoading;
     private ListView listViewEvents;
 
+    private List<Event> listEvents = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +44,17 @@ public class MySubscribedEventsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         constraintLayoutSubscribedEventsLoading = (ConstraintLayout) findViewById(R.id.constraintLayoutSubscribedEventstLoading);
-        listViewEvents = (ListView) findViewById(R.id.listViewEvents);
+
+        listViewEvents = (ListView) findViewById(R.id.listview_my_subscribed_events);
+
+        listViewEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(MySubscribedEventsActivity.this, EventDetailsActivity.class);
+                intent.putExtra("eventID", listEvents.get(i).get_id());
+                startActivity(intent);
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_my_subscribed_events_search);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -80,7 +94,7 @@ public class MySubscribedEventsActivity extends AppCompatActivity {
                 Toast.makeText(MySubscribedEventsActivity.this, apiResult.getResultMessage(), Toast.LENGTH_LONG).show();
             }
             else{
-                List<Event> listEvents = (List<Event>) apiResult.getResultEntity();
+                listEvents = (List<Event>) apiResult.getResultEntity();
 
                 EventListViewAdapter adapter = new EventListViewAdapter(listEvents, getApplicationContext());
 

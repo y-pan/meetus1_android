@@ -8,6 +8,7 @@
     tools:context="com.example.yun.meetup.activities.MainActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayoutMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/gradient_background"
