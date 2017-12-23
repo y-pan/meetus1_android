@@ -3,4 +3,5 @@
     <string name="title_activity_event_list">EventListActivity</string>
     <string name="title_activity_my_subscribed_events">MySubscribedEventsActivity</string>
     <string name="title_activity_search_events">Search Events</string>
+    <string name="title_activity_admin_event_listctivity">AdminEventListctivity</string>
 </resources>

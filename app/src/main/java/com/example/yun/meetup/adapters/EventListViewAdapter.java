@@ -22,14 +22,14 @@ public class EventListViewAdapter extends BaseAdapter {
     private final List<Event> mEvents;
     private Context mContext;
 
-    public class ViewHolder {
+    public class EventsListViewHolder {
 
         final TextView eventTitle;
         final TextView eventHost;
         final TextView eventDate;
         final TextView eventAddress;
 
-        public ViewHolder(View view) {
+        public EventsListViewHolder(View view) {
             eventTitle = (TextView) view.findViewById(R.id.lv_item_event_title);
             eventHost = (TextView) view.findViewById(R.id.lv_item_event_host);
             eventDate = (TextView) view.findViewById(R.id.lv_item_event_date);
@@ -62,14 +62,14 @@ public class EventListViewAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         View view;
-        ViewHolder holder;
+        EventsListViewHolder holder;
 
         if(convertView == null){
             view = LayoutInflater.from(mContext).inflate(R.layout.lv_event_item, parent, false);
-            holder = new ViewHolder(view);
+            holder = new EventsListViewHolder(view);
         }else {
             view = convertView;
-            holder = (ViewHolder) view.getTag();
+            holder = (EventsListViewHolder) view.getTag();
         }
 
         Event event = mEvents.get(position);

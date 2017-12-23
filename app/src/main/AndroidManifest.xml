@@ -70,8 +70,11 @@
 
         <activity
             android:name=".activities.SearchEventsActivity"
-            android:label="@string/title_activity_search_events"></activity>
-        <activity android:name=".activities.EventUpdateActivity"></activity>
+            android:label="@string/title_activity_search_events" />
+        <activity android:name=".activities.EventUpdateActivity" />
+        <activity android:name=".activities.AdminEventListActivity" />
+        <activity android:name=".activities.AdminUpdateEventActivity" />
+        <activity android:name=".activities.AdminEventDetailsActivity"></activity>
     </application>
 
 </manifest>
