@@ -12,6 +12,7 @@ import com.example.yun.meetup.requests.LoginRequest;
 import com.example.yun.meetup.requests.ParticipateToEventRequest;
 import com.example.yun.meetup.requests.RegistrationRequest;
 import com.example.yun.meetup.requests.SearchEventsRequest;
+import com.example.yun.meetup.requests.UpdateEventRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -124,6 +125,37 @@ public class NetworkManager {
         return apiResult;
     }
 
+    public APIResult validateEventAddress(UpdateEventRequest request) {
+
+        APIResult apiResult = new APIResult(false, "Failed converting address to location: please try again", null);
+
+        try {
+            String response = apiProvider.sendRequest(GOOGLE_API_GEOCODE_URL + "?key=" + GOOGLE_API_KEY + "&address=" + URLEncoder.encode(request.getAddress(), "UTF-8"), "GET", null);
+
+            JSONObject responseJSON = new JSONObject(response);
+
+            if (!responseJSON.isNull("status")) {
+
+                if (responseJSON.getString("status").equals("OK")) {
+                    JSONObject result = responseJSON.getJSONArray("results").getJSONObject(0);
+                    request.setAddress(result.getString("formatted_address"));
+                    request.setLatitude(Float.parseFloat(result.getJSONObject("geometry").getJSONObject("location").getString("lat")));
+                    request.setLongitude(Float.parseFloat(result.getJSONObject("geometry").getJSONObject("location").getString("lng")));
+                    apiResult = new APIResult(true, APIResult.RESULT_SUCCESS, request);
+                }
+                else if (responseJSON.getString("status").equals("ZERO_RESULTS")) {
+                    apiResult = new APIResult(false, "No address location found. Please enter a valid address!", null);
+                }
+
+            }
+        }
+        catch (JSONException | IOException e) {
+            e.printStackTrace();
+        }
+
+        return apiResult;
+    }
+
     public APIResult createEvent(CreateEventRequest createEventRequest) {
 
         GsonBuilder builder = new GsonBuilder();
@@ -144,6 +176,34 @@ public class NetworkManager {
 
                 apiResult = new APIResult(true, APIResult.RESULT_SUCCESS, event);
 
+            }
+        }
+        catch (JSONException | IOException e) {
+            e.printStackTrace();
+        }
+
+        return apiResult;
+    }
+
+    public APIResult updateEvent(UpdateEventRequest request) {
+
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        String json = gson.toJson(request);
+
+        APIResult apiResult = new APIResult(false, "Failed updating the event: please try again", null);
+
+        try {
+
+            String response = apiProvider.sendRequest("/event/update", "POST", json);
+
+            JSONObject responseJSON = new JSONObject(response);
+
+            if (!responseJSON.isNull("data")) {
+                Event event = gson.fromJson(responseJSON.getJSONObject("data").toString(), Event.class);
+                apiResult = new APIResult(true, APIResult.RESULT_SUCCESS, event);
+            } else if (!responseJSON.isNull("err")) {
+                apiResult = new APIResult(false, responseJSON.getString("err"), null);
             }
         }
         catch (JSONException | IOException e) {

@@ -1,10 +1,12 @@
 package com.example.yun.meetup.models;
 
+import java.io.Serializable;
+
 /**
  * Created by alessio on 02-Dec-17.
  */
 
-public class UserInfo {
+public class UserInfo implements Serializable {
 
     private String _id = "";
     private String email = "";

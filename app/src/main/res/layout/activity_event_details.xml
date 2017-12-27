@@ -274,7 +274,8 @@
         app:elevation="20dp"
         app:pressedTranslationZ="12dp"
         app:fabSize="mini"
-        android:src="@drawable/ic_edit_white_24dp" />
+        android:src="@drawable/ic_edit_white_24dp"
+        android:onClick="handleOnClickUpdate"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_event_detail_participate"

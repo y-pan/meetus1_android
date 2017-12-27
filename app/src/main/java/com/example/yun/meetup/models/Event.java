@@ -3,6 +3,7 @@ package com.example.yun.meetup.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * Created by alessio on 05-Dec-17.
  */
 
-public class Event {
+public class Event implements Serializable {
     private String _id = "";
     private String title = "";
     private String description = "";

@@ -1,15 +1,15 @@
 package com.example.yun.meetup.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -27,17 +27,16 @@ import com.example.yun.meetup.requests.ParticipateToEventRequest;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.security.AccessController.getContext;
-
 
 public class EventDetailsActivity extends AppCompatActivity {
 
+    static final int UPDATE_EVENT_REQUEST = 1;  // The request code
+    ArrayAdapter<String> listviewAdapter;
     private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private FloatingActionButton fabParticipate;
     private FloatingActionButton fabEdit;
     private FloatingActionButton fabDelete;
-
     private ConstraintLayout constraintLayoutDetailsLoading;
     private TextView textViewDetailAddress;
     private TextView textViewDetailDate;
@@ -45,11 +44,9 @@ public class EventDetailsActivity extends AppCompatActivity {
     private TextView textViewDetailSubtitle;
     private TextView textViewDetailDescription;
     private ListView listViewSubscribedUsers;
-
     private String userId;
     private String eventId;
-
-    ArrayAdapter<String> listviewAdapter;
+    private Event event;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +70,6 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         userId = sharedPreferences.getString("id", null);
-
 
 
         eventId = getIntent().getExtras().getString("eventID");
@@ -100,7 +96,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         }*/
     }
 
-    public void hideViews(){
+    public void hideViews() {
         constraintLayoutDetailsLoading.setVisibility(View.GONE);
     }
 
@@ -114,7 +110,23 @@ public class EventDetailsActivity extends AppCompatActivity {
         new ParticipateToEventTask().execute(participateToEventRequest);
     }
 
-    private class GetEventTask extends AsyncTask<String, Void, APIResult>{
+    public void handleOnClickUpdate(View view) {
+        Intent intent = new Intent(this, EventUpdateActivity.class);
+        intent.putExtra("event", event);
+        startActivityForResult(intent, UPDATE_EVENT_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == UPDATE_EVENT_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                constraintLayoutDetailsLoading.setVisibility(View.VISIBLE);
+                new GetEventTask().execute(eventId);
+            }
+        }
+    }
+
+    private class GetEventTask extends AsyncTask<String, Void, APIResult> {
 
         @Override
         protected APIResult doInBackground(String... strings) {
@@ -127,11 +139,10 @@ public class EventDetailsActivity extends AppCompatActivity {
 
             hideViews();
 
-            if (apiResult.getResultEntity() == null){
+            if (apiResult.getResultEntity() == null) {
                 Toast.makeText(EventDetailsActivity.this, "Error retrieving details of event: please try again", Toast.LENGTH_LONG).show();
-            }
-            else{
-                Event event = (Event) apiResult.getResultEntity();
+            } else {
+                event = (Event) apiResult.getResultEntity();
 
                 collapsingToolbarLayout.setTitle(event.getTitle().toUpperCase());
 
@@ -141,21 +152,20 @@ public class EventDetailsActivity extends AppCompatActivity {
                 textViewDetailSubtitle.setText(event.getSubtitle());
                 textViewDetailDescription.setText(event.getDescription());
 
-                if (userId.equals(event.getHost_id())){
+                if (userId.equals(event.getHost_id())) {
                     fabParticipate.setVisibility(View.GONE);
-                }
-                else{
+                } else {
                     fabEdit.setVisibility(View.GONE);
                     fabDelete.setVisibility(View.GONE);
                 }
 
                 List<String> listSubscribedUsers = new ArrayList<>();
 
-                for(UserInfo member : event.getMembers()){
+                for (UserInfo member : event.getMembers()) {
 
                     listSubscribedUsers.add(member.getName());
 
-                    if (userId.equals(member.get_id())){
+                    if (userId.equals(member.get_id())) {
                         fabParticipate.setVisibility(View.GONE);
                     }
                 }
@@ -166,7 +176,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private class ParticipateToEventTask extends AsyncTask<ParticipateToEventRequest, Void, APIResult>{
+    private class ParticipateToEventTask extends AsyncTask<ParticipateToEventRequest, Void, APIResult> {
 
         @Override
         protected APIResult doInBackground(ParticipateToEventRequest... participateToEventRequests) {
@@ -177,11 +187,10 @@ public class EventDetailsActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(APIResult apiResult) {
 
-            if (!apiResult.isResultSuccess()){
+            if (!apiResult.isResultSuccess()) {
                 hideViews();
                 Toast.makeText(EventDetailsActivity.this, apiResult.getResultMessage(), Toast.LENGTH_LONG).show();
-            }
-            else{
+            } else {
                 new GetEventTask().execute(eventId);
             }
         }
