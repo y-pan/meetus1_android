@@ -129,6 +129,7 @@
                 android:layout_marginTop="16dp"
                 android:padding="8dp"
                 android:text="Update Event"
+                android:onClick="handleOnClickAdminUpdate"
                 android:textColor="@android:color/white" />
 
             <TextView
@@ -148,7 +149,7 @@
     </ScrollView>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayoutLoading"
+        android:id="@+id/constraintLayoutAdminUpdateLoading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.5"

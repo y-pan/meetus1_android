@@ -75,7 +75,7 @@
                 android:layout_marginTop="16dp"
                 android:padding="8dp"
                 android:textColor="@android:color/white"
-                android:textColorHint="@android:color/white" />
+                android:textColorHint="@android:color/white"/>
 
             <TextView
                 android:id="@+id/txt_error_update_event_date"

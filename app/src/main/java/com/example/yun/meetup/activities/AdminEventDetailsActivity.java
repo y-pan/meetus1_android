@@ -77,6 +77,13 @@ public class AdminEventDetailsActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        constraintLayoutAdminEventDetailLoading.setVisibility(View.VISIBLE);
+        new AdminEventDetailsTask().execute(event_id);
+        super.onResume();
+    }
+
     public void handleOnClickContactHost(View view) {
         /* Create the Intent */
         final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
