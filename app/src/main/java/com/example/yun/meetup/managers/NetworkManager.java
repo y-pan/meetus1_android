@@ -13,9 +13,11 @@ import com.example.yun.meetup.requests.ParticipateToEventRequest;
 import com.example.yun.meetup.requests.RegistrationRequest;
 import com.example.yun.meetup.requests.SearchEventsRequest;
 import com.example.yun.meetup.requests.UpdateEventRequest;
+import com.google.android.gms.common.api.Api;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -440,6 +442,53 @@ public class NetworkManager {
                 Event event = gson.fromJson(jsonObject.getJSONObject("data").toString(), Event.class);
 
                 apiResult = new APIResult(true, APIResult.RESULT_SUCCESS, event);
+            }
+        }
+        catch (JSONException | IOException e) {
+            e.printStackTrace();
+        }
+
+        return apiResult;
+    }
+
+    public APIResult getAllEvents(){
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+
+        APIResult apiResult = new APIResult(false, "Error getting list of events: please try again", null);
+
+        try {
+            String response = apiProvider.sendRequest("/events", "GET", null);
+
+            JSONArray jsonArray = new JSONArray(response);
+
+            if (jsonArray.length() > 0) {
+                Event[] results = gson.fromJson(jsonArray.toString(), Event[].class);
+
+                List<Event> events = new ArrayList<>();
+
+                for (Event event : results){
+
+                    try{
+                        response = apiProvider.sendRequest("/user?id=" + event.getHost_id(), "GET", null);
+
+                        JSONObject responseJSON = new JSONObject(response);
+
+                        if (!responseJSON.isNull("data")) {
+
+                            UserInfo userInfo = gson.fromJson(responseJSON.getJSONObject("data").toString(), UserInfo.class);
+
+                            event.setUserInfo(userInfo);
+                        }
+                    }
+                    catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    events.add(event);
+                }
+
+                apiResult = new APIResult(true, APIResult.RESULT_SUCCESS, events);
             }
         }
         catch (JSONException | IOException e) {
