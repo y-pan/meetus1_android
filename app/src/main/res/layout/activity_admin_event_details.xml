@@ -145,6 +145,7 @@
                                 android:background="@drawable/rounded_button"
                                 android:layout_gravity="center_horizontal"
                                 android:elevation="12dp"
+                                android:onClick="handleOnClickContactHost"
                                 android:src="@drawable/ic_mail_outline_white_24dp"/>
 
                         </LinearLayout>
@@ -247,12 +248,13 @@
                                 android:textStyle="bold"
                                 android:layout_weight="2" />
 
-                            <ListView
-                                android:id="@+id/lv_admin_detail_subscribed_users"
-                                android:layout_width="match_parent"
+                            <LinearLayout
+                                android:id="@+id/linearLayoutAdminMembers"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:dividerHeight="8sp"
-                                />
+                                android:orientation="vertical"
+                                android:dividerHeight="10.0sp"
+                                xmlns:android="http://schemas.android.com/apk/res/android" />
 
                         </LinearLayout>
 
@@ -279,6 +281,7 @@
                 app:elevation="20dp"
                 app:pressedTranslationZ="12dp"
                 app:fabSize="mini"
+                android:onClick="handleOnClickAdminDelete"
                 android:src="@drawable/ic_delete_white_18dp" />
 
             <android.support.design.widget.FloatingActionButton
@@ -290,6 +293,7 @@
                 app:elevation="20dp"
                 app:pressedTranslationZ="12dp"
                 app:fabSize="mini"
+                android:onClick="handleOnClickAdminEdit"
                 android:src="@drawable/ic_edit_white_24dp" />
 
         </LinearLayout>
@@ -298,7 +302,7 @@
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayoutDetailsLoading"
+        android:id="@+id/constraintLayoutAdminEventDetailsLoading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/black"
