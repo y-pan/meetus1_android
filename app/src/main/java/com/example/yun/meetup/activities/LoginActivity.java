@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         boolean isAdmin = sharedPreferences.getBoolean("isAdmin", false);
         if (id != null){
             if (isAdmin){
-                Intent intent = new Intent(this, AdminEventListActivity.class);
+                Intent intent = new Intent(this, AdminMainActivity.class);
                 startActivity(intent);
             }
             else{
@@ -141,7 +141,7 @@ public class LoginActivity extends AppCompatActivity {
                 editor.commit();
 
                 if (result.isAdmin()){
-                    Intent intent = new Intent(LoginActivity.this, AdminEventListActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, AdminMainActivity.class);
                     startActivity(intent);
                 }
                 else{
