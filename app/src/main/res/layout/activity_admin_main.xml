@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/main_background"
+    android:gravity="center_vertical|center_horizontal"
+    tools:context="com.example.yun.meetup.activities.AdminMainActivity">
+
+        <TextView
+            android:id="@+id/textViewAdminMainTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="12dp"
+            android:textColor="@color/white"
+            android:textSize="32sp" />
+
+        <Button
+            android:id="@+id/buttonAdminListEvents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/background_button"
+            android:text="@string/list_all_events"
+            android:onClick="handleOnClickListAllEvents"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/buttonAdminLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/background_button"
+            android:text="@string/logout"
+            android:onClick="handleOnClickAdminLogout"
+            android:textColor="@android:color/white" />
+
+</LinearLayout>

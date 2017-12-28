@@ -4,4 +4,6 @@
     <string name="title_activity_my_subscribed_events">MySubscribedEventsActivity</string>
     <string name="title_activity_search_events">Search Events</string>
     <string name="title_activity_admin_event_listctivity">AdminEventListctivity</string>
+    <string name="list_all_events">List all events</string>
+    <string name="logout">Logout</string>
 </resources>
