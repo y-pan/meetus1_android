@@ -67,6 +67,7 @@ public class EventListViewAdapter extends BaseAdapter {
         if(convertView == null){
             view = LayoutInflater.from(mContext).inflate(R.layout.lv_event_item, parent, false);
             holder = new EventsListViewHolder(view);
+            view.setTag(holder);
         }else {
             view = convertView;
             holder = (EventsListViewHolder) view.getTag();
