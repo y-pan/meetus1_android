@@ -54,10 +54,18 @@ public class LoginActivity extends AppCompatActivity {
         scrollViewLogin = (ScrollView) findViewById(R.id.scrollViewLogin);
 
         SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-        String name = sharedPreferences.getString("id", null);
-        if (name != null){
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+        String id = sharedPreferences.getString("id", null);
+        boolean isAdmin = sharedPreferences.getBoolean("isAdmin", false);
+        if (id != null){
+            if (isAdmin){
+                Intent intent = new Intent(this, AdminEventListActivity.class);
+                startActivity(intent);
+            }
+            else{
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+            }
+
         }
         else{
             hideViews();
@@ -129,10 +137,18 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putString("id", result.get_id());
                 editor.putString("email", result.getEmail());
                 editor.putString("name", result.getName());
+                editor.putBoolean("isAdmin", result.isAdmin());
                 editor.commit();
 
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
+                if (result.isAdmin()){
+                    Intent intent = new Intent(LoginActivity.this, AdminEventListActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
+
             }
         }
     }
