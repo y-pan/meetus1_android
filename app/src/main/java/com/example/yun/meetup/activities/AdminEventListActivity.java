@@ -51,6 +51,20 @@ public class AdminEventListActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        constraintLayoutAdminEventListLoading.setVisibility(View.VISIBLE);
+        new AdminEventListTask().execute();
+        super.onResume();
+    }
+
+    @Override
+    protected void onRestart() {
+        constraintLayoutAdminEventListLoading.setVisibility(View.VISIBLE);
+        new AdminEventListTask().execute();
+        super.onRestart();
+    }
+
     public void hideViews(){
         constraintLayoutAdminEventListLoading.setVisibility(View.GONE);
     }

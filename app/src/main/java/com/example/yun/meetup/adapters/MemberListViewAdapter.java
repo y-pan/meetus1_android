@@ -60,6 +60,7 @@ public class MemberListViewAdapter extends BaseAdapter {
         if(convertView == null){
             view = LayoutInflater.from(mContext).inflate(R.layout.lv_members_item, parent, false);
             holder = new MembersListViewHolder(view);
+            view.setTag(holder);
         }else {
             view = convertView;
             holder = (MembersListViewHolder) view.getTag();

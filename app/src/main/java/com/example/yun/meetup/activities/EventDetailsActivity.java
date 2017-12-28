@@ -80,20 +80,6 @@ public class EventDetailsActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         new GetEventTask().execute(eventId);
-
-//        END
-
-        //TODO:
-//        Participate of an Event button
-//        If the User will alraedy checked to participate of this event, the icon color shouldo be WHITE.
-//        Otherwise it is gonna be GREY
-
-        /*        
-        if(isParticipating){
-            fabParticipate.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_person_add_white_24dp));
-        }else{
-            fabParticipate.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_person_add_grey_500_24dp));
-        }*/
     }
 
     public void hideViews() {
