@@ -177,7 +177,7 @@ public class EventUpdateActivity extends AppCompatActivity {
             if (apiResult.isResultSuccess()) {
                 Intent returnIntent = getIntent();
                 setResult(Activity.RESULT_OK, returnIntent);
-                finish();
+                EventUpdateActivity.this.finish();
             } else {
                 txt_error_update_event.setVisibility(View.VISIBLE);
                 txt_error_update_event.setText(apiResult != null ? apiResult.getResultMessage() : "Please contact admin staff!");
