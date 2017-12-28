@@ -82,6 +82,13 @@ public class EventDetailsActivity extends AppCompatActivity {
         new GetEventTask().execute(eventId);
     }
 
+    @Override
+    protected void onResume() {
+        constraintLayoutDetailsLoading.setVisibility(View.VISIBLE);
+        new GetEventTask().execute(eventId);
+        super.onResume();
+    }
+
     public void hideViews() {
         constraintLayoutDetailsLoading.setVisibility(View.GONE);
     }
