@@ -425,4 +425,28 @@ public class NetworkManager {
         return apiResult;
     }
 
+    public APIResult deleteEvent(String event_id){
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+
+        APIResult apiResult = new APIResult(false, "Error getting list of subscribed events: please try again", null);
+
+        try {
+            String response = apiProvider.sendRequest("/event?id=" + event_id, "DELETE", null);
+
+            JSONObject jsonObject = new JSONObject(response);
+
+            if (!jsonObject.isNull("data")) {
+                Event event = gson.fromJson(jsonObject.getJSONObject("data").toString(), Event.class);
+
+                apiResult = new APIResult(true, APIResult.RESULT_SUCCESS, event);
+            }
+        }
+        catch (JSONException | IOException e) {
+            e.printStackTrace();
+        }
+
+        return apiResult;
+    }
+
 }

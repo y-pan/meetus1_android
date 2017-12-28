@@ -6,7 +6,7 @@ package com.example.yun.meetup.requests;
 
 public class UpdateEventRequest {
 
-    private String event_id;
+    private String _id;
     private String title;
     private String description;
     private String subtitle;
@@ -15,12 +15,12 @@ public class UpdateEventRequest {
     private String date;
     private String address;
 
-    public String getEvent_id() {
-        return event_id;
+    public String get_id() {
+        return _id;
     }
 
-    public void setEvent_id(String event_id) {
-        this.event_id = event_id;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getTitle() {

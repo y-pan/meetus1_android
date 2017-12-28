@@ -30,6 +30,7 @@ public class EventListActivity extends AppCompatActivity {
     private ListView listViewEvents;
     private ConstraintLayout constraintLayoutEventListLoading;
     private List<Event> listEvents;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +69,34 @@ public class EventListActivity extends AppCompatActivity {
         EventListRequest eventListRequest = new EventListRequest();
 
         SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        userId = sharedPreferences.getString("id", null);
         eventListRequest.setHost_id(sharedPreferences.getString("id", null));
 
         new EventListTask().execute(eventListRequest);
 
+    }
+
+    @Override
+    protected void onResume() {
+        if (userId != null) {
+            constraintLayoutEventListLoading.setVisibility(View.VISIBLE);
+            EventListRequest eventListRequest = new EventListRequest();
+            eventListRequest.setHost_id(userId);
+            new EventListTask().execute(eventListRequest);
+        }
+
+        super.onResume();
+    }
+
+    @Override
+    protected void onRestart() {
+        if (userId != null) {
+            constraintLayoutEventListLoading.setVisibility(View.VISIBLE);
+            EventListRequest eventListRequest = new EventListRequest();
+            eventListRequest.setHost_id(userId);
+            new EventListTask().execute(eventListRequest);
+        }
+        super.onRestart();
     }
 
     private class EventListTask extends AsyncTask<EventListRequest, Void, APIResult>{

@@ -130,7 +130,7 @@ public class EventUpdateActivity extends AppCompatActivity {
         if (!error) {
             constraintLayoutLoading.setVisibility(View.VISIBLE);
             UpdateEventRequest updateEventRequest = new UpdateEventRequest();
-            updateEventRequest.setEvent_id(event.get_id());
+            updateEventRequest.set_id(event.get_id());
             updateEventRequest.setTitle(edt_update_event_title.getText().toString());
             updateEventRequest.setSubtitle(edt_update_event_subtitle.getText().toString());
             updateEventRequest.setDescription(edt_update_event_description.getText().toString());

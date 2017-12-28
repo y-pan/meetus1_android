@@ -263,7 +263,8 @@
         app:elevation="20dp"
         app:pressedTranslationZ="12dp"
         app:fabSize="mini"
-        android:src="@drawable/ic_delete_white_18dp" />
+        android:src="@drawable/ic_delete_white_18dp"
+        android:onClick="handleOnClickDelete"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_edit_event_details"

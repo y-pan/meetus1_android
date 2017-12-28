@@ -126,6 +126,10 @@ public class EventDetailsActivity extends AppCompatActivity {
         }
     }
 
+    public void handleOnClickDelete(View view) {
+        new DeleteEventTask().execute(eventId);
+    }
+
     private class GetEventTask extends AsyncTask<String, Void, APIResult> {
 
         @Override
@@ -192,6 +196,28 @@ public class EventDetailsActivity extends AppCompatActivity {
                 Toast.makeText(EventDetailsActivity.this, apiResult.getResultMessage(), Toast.LENGTH_LONG).show();
             } else {
                 new GetEventTask().execute(eventId);
+            }
+        }
+    }
+
+    private class DeleteEventTask extends AsyncTask<String, Void, APIResult>{
+
+        @Override
+        protected APIResult doInBackground(String... strings) {
+            NetworkManager networkManager = new NetworkManager();
+            return networkManager.deleteEvent(strings[0]);
+        }
+
+        @Override
+        protected void onPostExecute(APIResult apiResult) {
+            if (!apiResult.isResultSuccess()){
+                Toast.makeText(EventDetailsActivity.this, apiResult.getResultMessage(), Toast.LENGTH_LONG).show();
+            }
+            else{
+                Event event = (Event) apiResult.getResultEntity();
+
+                Toast.makeText(EventDetailsActivity.this, "Event deleted successfully!", Toast.LENGTH_LONG).show();
+                finish();
             }
         }
     }
