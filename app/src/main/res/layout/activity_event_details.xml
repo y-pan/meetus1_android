@@ -229,8 +229,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Subscribed Users"
                                 android:textSize="24sp"
-                                android:textStyle="bold"
-                                android:layout_weight="2" />
+                                android:textStyle="bold" />
 
                             <ListView
                                 android:id="@+id/lv_detail_subscribed_users"
