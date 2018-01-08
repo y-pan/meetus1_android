@@ -412,6 +412,15 @@ public class NetworkManager {
                     List<Event> listEvents = new ArrayList<>();
 
                     for (Event event : events){
+                        response = apiProvider.sendRequest("/user?id=" + event.getHost_id(), "GET", null);
+
+                        jsonObject = new JSONObject(response);
+
+                        if (!jsonObject.isNull("data")){
+                            UserInfo userInfo = gson.fromJson(jsonObject.getJSONObject("data").toString(), UserInfo.class);
+                            event.setUserInfo(userInfo);
+                        }
+
                         listEvents.add(event);
                     }
 

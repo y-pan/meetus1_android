@@ -80,7 +80,13 @@ public class AdminEventDetailsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         constraintLayoutAdminEventDetailLoading.setVisibility(View.VISIBLE);
-        new AdminEventDetailsTask().execute(event_id);
+
+        if (linearLayoutAdminMembers.getChildCount() > 0){
+            linearLayoutAdminMembers.removeAllViews();
+            new AdminEventDetailsTask().execute(event_id);
+        }
+
+
         super.onResume();
     }
 

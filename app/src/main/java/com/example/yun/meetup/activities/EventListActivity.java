@@ -61,7 +61,7 @@ public class EventListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(EventListActivity.this, EventDetailsActivity.class);
-                intent.putExtra("eventID", listEvents.get(i).get_id());
+                intent.putExtra("eventId", listEvents.get(i).get_id());
                 startActivity(intent);
             }
         });
